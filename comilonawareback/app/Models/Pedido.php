@@ -14,6 +14,10 @@ class Pedido extends Model
         'precio',
         'estado',
     ];
+
+    public function productos(){
+        return $this->belongsToMany(Producto::class);
+    }
     /*
     //Relación uno a muchos inversa con Users.
     public function user(){

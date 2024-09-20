@@ -15,6 +15,10 @@ class Producto extends Model
         'imagen',
         'stock',
     ];
+
+    public function pedidos(){
+        return $this->belongsToMany(Pedido::class);
+    }
     /*
     //Relación uno a muchos inversa con Users.
     public function user(){
