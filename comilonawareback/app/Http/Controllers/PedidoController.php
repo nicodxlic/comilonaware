@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\PedidosModel;
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
-class Pedidos extends Controller
+class PedidoController extends Controller
 {
     public function index(){
         $pedidos = [

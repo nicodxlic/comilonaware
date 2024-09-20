@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Productos;
-use App\Http\Controllers\Pedidos;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\PedidoController;
 
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-Route::get('/productos', [Productos::class, 'index']);
-Route::post('/productos/post', [Productos::class, 'crear']);
+Route::get('/productos', [ProductoController::class, 'index']);
+Route::post('/productos/post', [ProductoController::class, 'crear']);
 
-Route::get('/pedidos', [Pedidos::class, 'index']);
-Route::post('/pedidos/post', [Pedidos::class, 'crear']);
+Route::get('/pedidos', [PedidoController::class, 'index']);
+Route::post('/pedidos/post', [PedidoController::class, 'crear']);
 
 require __DIR__.'/auth.php';
