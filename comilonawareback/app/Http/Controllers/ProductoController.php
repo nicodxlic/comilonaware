@@ -17,7 +17,7 @@ class ProductoController extends Controller
         if ($request) {
 
         Producto::create([
-            'nombre' => $request->input('title'),
+            'nombre' => $request->input('nombre'),
             'imagen' => $request->input('imagen'),
             'precio' => $request->input('precio'),
             'stock' => $request->input('stock'),
