@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 class ProductoController extends Controller
 {
     public function index(){
-        $productos = [
-            (object) ['nombre' => 'hamburguesa de queso', 'id' => 1, 'precio' => 10.2, 'imagen' => null, 'stock' => 20],
-            (object) ['nombre' => 'milanesa', 'id' => 2, 'precio' => 7.6, 'imagen' => null, 'stock' => 15]
-        ];
+        $productos = Producto::all();
 
         return $productos;
     }
