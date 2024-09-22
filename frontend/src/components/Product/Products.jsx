@@ -11,6 +11,8 @@ const endpoint = 'http://localhost:8000/api'
 const Products = () => {
 
     const [products, setProducts] = useState([])
+    
+    /*
     useEffect ( () => {
         getAllProducts()
     }, [])
@@ -24,6 +26,7 @@ const Products = () => {
       axios.delete(`${endpoint}/product/${id}`)
       getAllProducts()
     }
+      */
 
   return (
     <div>
@@ -43,7 +46,7 @@ const Products = () => {
             <td> {product.stock} </td>
             <td>
               <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
-              <button onClick={ ()=> deleteProduct(product.id) } className='btn btn-danger'>Eliminar</button>
+              <button onClick={console.log('delete') /*</td>()=> deleteProduct(product.id) </tr>*/} className='btn btn-danger'>Eliminar</button>
             </td>
           </tr>
         ))}

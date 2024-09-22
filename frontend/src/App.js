@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { ROUTES } from './const/routes.js';
+//import { ROUTES } from './const/routes.js';
 import { BrowserRouter, Route, Routes, RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from './pages/Home.jsx';
-import Products from './components/Product/Products.jsx';
+//import Home from './pages/Home.jsx';
+import Home from './components/Home/Home.jsx';
 
 
 
@@ -27,7 +27,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
       <Routes>
-        <Route path='/' element={ <Products/> }/>
+        <Route path='/' element={ <Home/> }/>
       </Routes>
       </BrowserRouter>
       <header className="App-header">
