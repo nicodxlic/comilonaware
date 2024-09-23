@@ -12,7 +12,6 @@ const Products = () => {
 
     const [products, setProducts] = useState([])
     
-    /*
     useEffect ( () => {
         getAllProducts()
     }, [])
@@ -22,20 +21,21 @@ const Products = () => {
        setProducts(response.data)
     }
 
-    const deleteProduct = async (id) => {
+   /* const deleteProduct = async (id) => {
       axios.delete(`${endpoint}/product/${id}`)
       getAllProducts()
-    }
-      */
+    } */
 
   return (
     <div>
+      <h3>Productos</h3>
     <table className='table table-striped'>
       <thead className='bg-primary text-white text-center'>
         <tr>
           <th>Nombre</th>
           <th>Precio</th>
           <th>Stock</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody className='text-center'>

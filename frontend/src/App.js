@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes, RouterProvider, createBrowserRouter } from "react-router-dom";
 //import Home from './pages/Home.jsx';
 import Home from './components/Home/Home.jsx';
+import CreateProduct from './components/Product/CreateProduct';
 
 
 
@@ -28,6 +29,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={ <Home/> }/>
+        <Route path='/create' element={ <CreateProduct/>} />
       </Routes>
       </BrowserRouter>
       <header className="App-header">
