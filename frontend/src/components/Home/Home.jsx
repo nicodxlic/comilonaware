@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
 
-    const [role, setRole] = useState('')
+    const [role, setRole] = useState('restocker')
 
     const handleRoleChange = (event) => {
       setRole(event.target.value);
@@ -16,8 +16,7 @@ const Home = () => {
         <div>
             <h2>Rol</h2>
             <select value={role} onChange={handleRoleChange}>
-                <option value="">Seleccionar Rol</option>
-                <option value="restocker">Repositor</option>
+                <option default value="restocker">Repositor</option>
                 <option value="waiter">Mozo</option>
             </select>
 

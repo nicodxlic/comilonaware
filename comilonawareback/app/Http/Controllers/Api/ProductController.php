@@ -60,9 +60,9 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        $product = Product::destroy($id);
+        $product = Product::destroy($request->id);
         return $product;
     }
 }

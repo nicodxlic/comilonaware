@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import {axios} from '../../axiosConfig.js'
 
 import {Link} from 'react-router-dom'
 
@@ -20,6 +20,12 @@ const Products = () => {
        const response = await axios.get(`${endpoint}/products`)
        setProducts(response.data)
     }
+
+    const deleteProduct = async (id) => {
+      const response = await axios.post(`${endpoint}/product/delete`, {id: id})
+      console.log(response)
+      getAllProducts()
+   }
 
    /* const deleteProduct = async (id) => {
       axios.delete(`${endpoint}/product/${id}`)
@@ -46,7 +52,7 @@ const Products = () => {
             <td> {product.stock} </td>
             <td>
               <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
-              <button onClick={console.log('delete') /*</td>()=> deleteProduct(product.id) </tr>*/} className='btn btn-danger'>Eliminar</button>
+              <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
             </td>
           </tr>
         ))}
