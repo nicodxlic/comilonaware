@@ -59,7 +59,7 @@ const Products = () => {
       </tbody>
     </table>
     <div className='d-grip gap-2'>
-      <Link to="/create" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo producto</Link>
+      <Link to="/create-product" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo producto</Link>
     </div>
     </div>
   )
