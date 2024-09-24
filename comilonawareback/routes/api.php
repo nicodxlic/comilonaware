@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\Order_ProductController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -20,4 +21,12 @@ Route::controller(ProductController::class)->group(function () {
 
 Route::controller(Order_ProductController::class)->group(function () {
     Route::get('/orders_products', 'index');
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/orders', 'index');
+    Route::post('/order', 'store');
+    Route::get('/order/{$id}', 'show');
+    Route::put('/order/{$id}', 'update');
+    Route::post('/order/delete', 'destroy');
 });

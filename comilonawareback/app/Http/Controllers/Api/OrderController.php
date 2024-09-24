@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -27,7 +28,9 @@ class OrderController extends Controller
                 'price' => $request->input('price'),
             ]);
 
-            $order->products()->attach($request->input('products'));
+            foreach ($request->products as $product) {
+                $order->products()->attach($product['id']);
+            }
 
             return 'Pedido creado exitosamente.';
         } else {

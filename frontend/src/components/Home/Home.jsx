@@ -1,5 +1,5 @@
-import Order from '../Order/Order.jsx';
 import Products from '../Product/Products.jsx';
+import ListOrders from '../Order/ListOrders.jsx';
 
 import React, { useEffect, useState } from 'react'
 
@@ -9,7 +9,7 @@ const Home = () => {
     const [role, setRole] = useState('restocker')
 
     const handleRoleChange = (event) => {
-      setRole(event.target.value);
+        setRole(event.target.value);
     }
 
     return (
@@ -21,7 +21,7 @@ const Home = () => {
             </select>
 
             {role === 'restocker' && <Products />}
-            {role === 'waiter' && <Order />}
+            {role === 'waiter' && <ListOrders />}
         </div>
     )
 }
