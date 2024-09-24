@@ -32,6 +32,8 @@ const Products = () => {
       getAllProducts()
     } */
 
+    // <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
+
   return (
     <div>
       <h3>Productos</h3>
@@ -51,7 +53,6 @@ const Products = () => {
             <td> {product.price} </td>
             <td> {product.stock} </td>
             <td>
-              <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
               <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
             </td>
           </tr>
@@ -59,7 +60,7 @@ const Products = () => {
       </tbody>
     </table>
     <div className='d-grip gap-2'>
-      <Link to="/create" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo producto</Link>
+      <Link to="/create-product" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo producto</Link>
     </div>
     </div>
   )

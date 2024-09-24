@@ -7,7 +7,7 @@ const CreateProduct = () => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState(1)
     const [stock, setStock] = useState(1)
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('img')
     const navigate = useNavigate()
 
     const store = async (e) => {
@@ -39,15 +39,6 @@ const CreateProduct = () => {
                 />
             </div>
             <div className='mb-3'>
-                <label className='form-label'>Imagen</label>
-                <input
-                    value={image}
-                    onChange={ (e)=> setImage(e.target.value)}
-                    type='text'
-                    className='form-control'
-                />
-            </div>
-            <div className='mb-3'>
                 <label className='form-label'>Stock</label>
                 <input
                     value={stock}
@@ -60,7 +51,7 @@ const CreateProduct = () => {
             <button type='submit' className='btn btn-primary'>Guardar</button>
         </form>
     </div>
-  )
+    )
 }
 
 export default CreateProduct
