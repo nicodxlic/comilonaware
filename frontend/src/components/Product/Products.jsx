@@ -32,6 +32,8 @@ const Products = () => {
       getAllProducts()
     } */
 
+    // <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
+
   return (
     <div>
       <h3>Productos</h3>
@@ -51,7 +53,6 @@ const Products = () => {
             <td> {product.price} </td>
             <td> {product.stock} </td>
             <td>
-              <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
               <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
             </td>
           </tr>
