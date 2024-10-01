@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {axios} from '../../axiosConfig.js'
 
 import {Link} from 'react-router-dom'
+import ProductsCard from './ProductsCard.jsx'
 
 /**Hice una prueba para ver si traia los items de la BD
  * Posiblemente la funcionalidad de este componente cambie
@@ -38,54 +39,36 @@ const Products = () => {
   }, [searchTerm, products])
 
   return (
-    <div>
-      <h3>Productos</h3>
-      <div>
-        <input 
-        type='text' 
-        placeholder='buscar productos'
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-    <table className='table table-striped'>
-      <thead className='bg-primary text-white text-center'>
-        <tr>
-          <th>Nombre</th>
-          <th>Precio</th>
-          <th>Stock</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(product => ( //meter los tr y td dentro de una card
-            <tr key={product.id}>
-              <td> {product.name} </td>
-              <td> {product.price} </td>
-              <td> {product.stock} </td>
-              <td>
-                <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
-              </td>
-            </tr>
-          ))
-        ) : products.map ((product) => (
-          <tr key={product.id}>
-            <td> {product.name} </td>
-            <td> {product.price} </td>
-            <td> {product.stock} </td>
-            <td>
-              <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <div className='d-grip gap-2'>
-      <Link to="/create-product" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo producto</Link>
+    <div className="container mx-auto p-4">
+        <h3 className="text-2xl font-bold mb-4">Productos</h3>
+        <div className="mb-6">
+            <input 
+                type='text' 
+                placeholder='Buscar productos'
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+        </div>
+
+        {/* Grid layout para las cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {filteredProducts.length > 0 ? (
+                filteredProducts.map(product => (
+                    <ProductsCard product = {product} deleteProduct={deleteProduct}/>
+                ))
+            ) : (
+                <p className="text-center col-span-full">Cargando productos...</p>
+            )}
+        </div>
+
+        <div className='flex justify-center mt-6'>
+            <Link to="/create-product" className='bg-green-500 text-white px-4 py-2 rounded-lg'>
+                Agregar nuevo producto
+            </Link>
+        </div>
     </div>
-    </div>
-  )
+)
 }
 
 export default Products
