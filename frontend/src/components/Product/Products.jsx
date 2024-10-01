@@ -11,6 +11,8 @@ const endpoint = 'http://localhost:8000/api'
 const Products = () => {
 
     const [products, setProducts] = useState([])
+    const [filteredProducts, setFilteredProducts] = useState([])
+    const [searchTerm, setSearchTerm] = useState('')
     
     useEffect ( () => {
         getAllProducts()
@@ -19,6 +21,7 @@ const Products = () => {
     const getAllProducts = async () => {
        const response = await axios.get(`${endpoint}/products`)
        setProducts(response.data)
+       setFilteredProducts(response.data)
     }
 
     const deleteProduct = async (id) => {
@@ -27,16 +30,24 @@ const Products = () => {
       getAllProducts()
    }
 
-   /* const deleteProduct = async (id) => {
-      axios.delete(`${endpoint}/product/${id}`)
-      getAllProducts()
-    } */
-
-    // <Link to={`/edit/${product.id}`} className='btn btn-warning'>Editar</Link>
+  useEffect(() => {
+    const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    setFilteredProducts(filtered)
+  }, [searchTerm, products])
 
   return (
     <div>
       <h3>Productos</h3>
+      <div>
+        <input 
+        type='text' 
+        placeholder='buscar productos'
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
     <table className='table table-striped'>
       <thead className='bg-primary text-white text-center'>
         <tr>
@@ -47,7 +58,18 @@ const Products = () => {
         </tr>
       </thead>
       <tbody className='text-center'>
-        { products.map ((product) => (
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map(product => ( //meter los tr y td dentro de una card
+            <tr key={product.id}>
+              <td> {product.name} </td>
+              <td> {product.price} </td>
+              <td> {product.stock} </td>
+              <td>
+                <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Eliminar</button>
+              </td>
+            </tr>
+          ))
+        ) : products.map ((product) => (
           <tr key={product.id}>
             <td> {product.name} </td>
             <td> {product.price} </td>
