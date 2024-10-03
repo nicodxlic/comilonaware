@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {axios} from '../../axiosConfig.js'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+
 const endpoint = 'http://localhost:8000/api/product'
 
 const CreateProduct = () => {
@@ -14,6 +16,11 @@ const CreateProduct = () => {
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
         await axios.post(endpoint, {name: name, price: price, image: image, stock: stock})
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Pedido creado correctamente',
+        })
         navigate('/')
     }
     return (

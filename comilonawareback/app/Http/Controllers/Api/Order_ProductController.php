@@ -37,13 +37,16 @@ class Order_ProductController extends Controller
         
     }
     
-
+    */
+    
     
     public function show(string $id)
     {
-        $product = Product::find($id);
-        return $product;
+        $orderProducts = Order_Product::where('order_id', $id)->get();
+        return $orderProducts;
     }
+
+    /*
 
     public function update(Request $request, string $id)
     {
