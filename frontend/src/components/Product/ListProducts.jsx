@@ -31,6 +31,7 @@ const ListProducts = ({ addProductToOrder }) => {
       </thead>
       <tbody className='text-center'>
         { products.map ((product) => (
+          product.enabled == 0 ? (
           <tr key={product.id}>
             <td> {product.name} </td>
             <td> {product.price} </td>
@@ -38,7 +39,7 @@ const ListProducts = ({ addProductToOrder }) => {
             <td>
               <button type="button" onClick={() => addProductToOrder(product)} className='btn btn-info'>Agregar</button>
             </td>
-          </tr>
+          </tr>) : ('')
         ))}
       </tbody>
     </table>
