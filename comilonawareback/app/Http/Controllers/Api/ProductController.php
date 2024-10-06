@@ -65,4 +65,16 @@ class ProductController extends Controller
         $product = Product::destroy($request->id);
         return $product;
     }
+
+    public function disable(Request $request, string $id)
+    {
+        $product = Product::findOrFail($id);
+        if($product->enabled == 1){
+            $product->enabled = 0;
+        } else if($product->enabled == 0) {
+            $product->enabled = 1;
+        }
+        $product->save();
+        return $product;
+    }
 }

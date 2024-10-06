@@ -13,9 +13,10 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index');
+    Route::patch('/product/disable/{id}', 'disable');
     Route::post('/product', 'store');
-    Route::get('/product/{$id}', 'show');
-    Route::put('/product/{$id}', 'update');
+    Route::get('/product/{id}', 'show');
+    Route::put('/product/{id}', 'update');
     Route::post('/product/delete', 'destroy');
 });
 

@@ -14,22 +14,19 @@ const Products = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+
+    const getAllProducts = async () => {
+       const response = await axios.get(`${endpoint}/products`)
+       const sortedOrders = response.data.sort((a, b) => {
+        return a.enabled === b.enabled ? 0 : a.enabled ? -1 : 1;
+      });
+       setProducts(sortedOrders)
+       setFilteredProducts(sortedOrders)
+    }    
     
     useEffect ( () => {
         getAllProducts()
     }, [])
-
-    const getAllProducts = async () => {
-       const response = await axios.get(`${endpoint}/products`)
-       setProducts(response.data)
-       setFilteredProducts(response.data)
-    }
-
-    const deleteProduct = async (id) => {
-      const response = await axios.post(`${endpoint}/product/delete`, {id: id})
-      console.log(response)
-      getAllProducts()
-   }
 
   useEffect(() => {
     const filtered = products.filter(product =>
@@ -55,7 +52,9 @@ const Products = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.length > 0 ? (
                 filteredProducts.map(product => (
-                    <ProductsCard product = {product} deleteProduct={deleteProduct}/>
+                    <ProductsCard 
+                    product = {product}
+                    getAllProducts={getAllProducts}/>
                 ))
             ) : (
                 <p className="text-center col-span-full">Cargando productos...</p>

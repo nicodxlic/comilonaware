@@ -17,6 +17,7 @@ return new class extends Migration
             $table->float('price', 2);
             $table->string('image');
             $table->integer('stock');
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }

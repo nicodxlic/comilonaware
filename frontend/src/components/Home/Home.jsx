@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
 
-    const [role, setRole] = useState('restocker')
+    const [role, setRole] = useState('admin')
 
     const handleRoleChange = (event) => {
         setRole(event.target.value);
@@ -16,11 +16,11 @@ const Home = () => {
         <div>
             <h2>Rol</h2>
             <select value={role} onChange={handleRoleChange}>
-                <option default value="restocker">Repositor</option>
+                <option default value="admin">Administrador</option>
                 <option value="waiter">Mozo</option>
             </select>
 
-            {role === 'restocker' && <Products />}
+            {role === 'admin' && <Products />}
             {role === 'waiter' && <ListOrders />}
         </div>
     )
