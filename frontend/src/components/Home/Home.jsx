@@ -1,5 +1,5 @@
-import Products from '../Product/Products.jsx';
-import ListOrders from '../Order/ListOrders.jsx';
+import ProductsCMS from '../Product/ProductsCMS.jsx';
+import ListOrdersCMS from '../Order/ListOrdersCMS.jsx';
 
 import React, { useEffect, useState } from 'react'
 
@@ -20,8 +20,8 @@ const Home = () => {
                 <option value="waiter">Mozo</option>
             </select>
 
-            {role === 'admin' && <Products />}
-            {role === 'waiter' && <ListOrders />}
+            {role === 'admin' && <ProductsCMS />}
+            {role === 'waiter' && <ListOrdersCMS />}
         </div>
     )
 }
