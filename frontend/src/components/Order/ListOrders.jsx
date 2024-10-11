@@ -30,7 +30,7 @@ const ListOrders = () => {
       let productosHTML = '';
       for(let i = 0; i < response.data.length; i++){
         for(let j = 0; j < products.length; j++){
-          if(response.data[i].product_id == products[j].id){
+          if(response.data[i].product_id === products[j].id){
             productosHTML = productosHTML + products[j].name + '<br/>'
             break;
           }

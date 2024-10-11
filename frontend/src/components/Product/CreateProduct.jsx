@@ -9,17 +9,17 @@ const CreateProduct = () => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState(1)
     const [stock, setStock] = useState(1)
-    const [image, setImage] = useState('img')
+    const [image, setImage] = useState('')
     const navigate = useNavigate()
 
     const store = async (e) => {
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
-        await axios.post(endpoint, {name: name, price: price, image: image, stock: stock})
+        await axios.post(endpoint, {name: name, price: price, image: image, stock: 0})
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
-            text: 'Pedido creado correctamente',
+            text: 'Producto creado correctamente',
         })
         navigate('/')
     }
@@ -46,11 +46,11 @@ const CreateProduct = () => {
                 />
             </div>
             <div className='mb-3'>
-                <label className='form-label'>Stock</label>
+                <label className='form-label'>URL de la imagen</label>
                 <input
-                    value={stock}
-                    onChange={ (e)=> setStock(e.target.value)}
-                    type='number'
+                    value={image}
+                    onChange={ (e)=> setImage(e.target.value)}
+                    type='text'
                     className='form-control'
                 />
             </div>

@@ -1,7 +1,7 @@
-import ProductsCMS from '../Product/ProductsCMS.jsx';
-import ListOrdersCMS from '../Order/ListOrdersCMS.jsx';
+import Products from '../Product/Products.jsx';
+import ListOrders from '../Order/ListOrders.jsx';
 
-import React, { useEffect, useState } from 'react'
+import React, { /*useEffect,*/ useState } from 'react'
 
 
 const Home = () => {
@@ -20,8 +20,8 @@ const Home = () => {
                 <option value="waiter">Mozo</option>
             </select>
 
-            {role === 'admin' && <ProductsCMS />}
-            {role === 'waiter' && <ListOrdersCMS />}
+            {role === 'admin' && <Products />}
+            {role === 'waiter' && <ListOrders />}
         </div>
     )
 }

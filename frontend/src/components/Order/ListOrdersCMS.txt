@@ -51,9 +51,9 @@ const ListOrdersCMS = () => {
           <th>Productos</th>
         </tr>
       </thead>
-      <tbody className='text-center text-white'>
+      <tbody className='text-center text-gray'>
         { orders.map ((order) => (
-          <tr key={order.id}>
+          <tr className='bg-white' key={order.id}>
             <td> {order.table} </td>
             <td> {order.price} </td>
             <td> {order.status} </td>

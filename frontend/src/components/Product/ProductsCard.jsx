@@ -11,7 +11,7 @@ const ProductsCard = ({product, getAllProducts}) => {
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
-            text: 'producto eliminado correctamente',
+            text: 'Producto eliminado correctamente',
         })
         getAllProducts()
      }
@@ -20,21 +20,19 @@ const ProductsCard = ({product, getAllProducts}) => {
         await axios.get('/sanctum/csrf-cookie');
         const response = await axios.patch(`${endpoint}/product/disable/` + id)
         getAllProducts()
-        console.log()
         if(response.data.enabled == 0){
             Swal.fire({
                 icon: 'success',
                 title: '¡Éxito!',
-                text: 'producto deshabilitado correctamente',
+                text: 'Producto deshabilitado correctamente',
             })
         } else {
             Swal.fire({
                 icon: 'success',
                 title: '¡Éxito!',
-                text: 'producto habilitado correctamente',
+                text: 'Producto habilitado correctamente',
             })
         }
-        
     }
 
     if (product.enabled == 0) {
@@ -42,6 +40,12 @@ const ProductsCard = ({product, getAllProducts}) => {
           <div key={product.id} className="bg-red-500 shadow-lg rounded-lg p-4">
             <p className="text-yellow-300 font-bold mb-4">Deshabilitado</p>
             <h4 className="font-bold text-lg mb-2 text-white">{product.name}</h4>
+            {/* Imagen del producto */}
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              className="w-full h-48 object-cover mb-4 rounded-lg"
+            />
             <p className="text-white mb-2">Precio: ${product.price}</p>
             <p className="text-white mb-4">Stock: {product.stock}</p>
             
@@ -63,6 +67,12 @@ const ProductsCard = ({product, getAllProducts}) => {
         return (
           <div key={product.id} className="bg-white shadow-lg rounded-lg p-4">
             <h4 className="font-bold text-lg mb-2">{product.name}</h4>
+            {/* Imagen del producto */}
+            <img 
+              src={product.image} 
+              alt={product.name} 
+              className="w-full h-48 object-cover mb-4 rounded-lg"
+            />
             <p className="text-gray-700 mb-2">Precio: ${product.price}</p>
             <p className="text-gray-700 mb-4">Stock: {product.stock}</p>
             <button

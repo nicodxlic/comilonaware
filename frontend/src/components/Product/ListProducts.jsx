@@ -16,6 +16,7 @@ const ListProducts = ({ addProductToOrder }) => {
     const getAllProducts = async () => {
       const response = await axios.get(`${endpoint}/products`)
       setProducts(response.data)
+      console.log(response.data)
     }
 
   return (
@@ -31,7 +32,7 @@ const ListProducts = ({ addProductToOrder }) => {
       </thead>
       <tbody className='text-center'>
         { products.map ((product) => (
-          product.enabled == 0 ? (
+          product.enabled == 1 ? (
           <tr key={product.id}>
             <td> {product.name} </td>
             <td> {product.price} </td>

@@ -38,6 +38,11 @@ const Products = () => {
   return (
     <div className="container mx-auto p-4">
         <h3 className="text-2xl font-bold mb-4">Productos</h3>
+        <div className='flex justify-center mt-6 mb-6'>
+            <Link to="/create-product" className='bg-green-500 text-white px-4 py-2 rounded-lg'>
+                Agregar nuevo producto
+            </Link>
+        </div>
         <div className="mb-6">
             <input 
                 type='text' 
@@ -59,12 +64,6 @@ const Products = () => {
             ) : (
                 <p className="text-center col-span-full">Cargando productos...</p>
             )}
-        </div>
-
-        <div className='flex justify-center mt-6'>
-            <Link to="/create-product" className='bg-green-500 text-white px-4 py-2 rounded-lg'>
-                Agregar nuevo producto
-            </Link>
         </div>
     </div>
 )
