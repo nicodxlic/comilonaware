@@ -14,14 +14,21 @@ const Products = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
     const [searchTerm, setSearchTerm] = useState('')
+    const [productMesage, setProductMesage] = useState('Cargando productos...')
 
     const getAllProducts = async () => {
        const response = await axios.get(`${endpoint}/products`)
-       const sortedOrders = response.data.sort((a, b) => {
+       if(response.data.length === 0){
+        setProductMesage('No se han encontrado productos')
+       } else{
+        let sortedOrders = response.data.filter(product => product.deleted !== 1)
+        sortedOrders = sortedOrders.sort((a, b) => {
         return a.enabled === b.enabled ? 0 : a.enabled ? -1 : 1;
       });
-       setProducts(sortedOrders)
-       setFilteredProducts(sortedOrders)
+
+        setProducts(sortedOrders)
+        setFilteredProducts(sortedOrders)
+       }
     }    
     
     useEffect ( () => {
@@ -62,7 +69,7 @@ const Products = () => {
                     getAllProducts={getAllProducts}/>
                 ))
             ) : (
-                <p className="text-center col-span-full">Cargando productos...</p>
+                <p className="text-center col-span-full">{productMesage}</p>
             )}
         </div>
     </div>

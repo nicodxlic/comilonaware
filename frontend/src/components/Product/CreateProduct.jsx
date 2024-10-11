@@ -15,7 +15,7 @@ const CreateProduct = () => {
     const store = async (e) => {
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
-        await axios.post(endpoint, {name: name, price: price, image: image, stock: 0})
+        await axios.post(endpoint, {name: name, price: price, image: image, deleted: false, enabled: true})
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',

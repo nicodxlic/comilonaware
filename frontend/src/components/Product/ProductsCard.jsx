@@ -7,7 +7,8 @@ const endpoint = 'http://localhost:8000/api'
 const ProductsCard = ({product, getAllProducts}) => {
 
     const deleteProduct = async (id) => {
-        const response = await axios.post(`${endpoint}/product/delete`, {id: id})
+      console.log(id)
+        const response = await axios.put(`${endpoint}/product/delete/` + id)
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',

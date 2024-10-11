@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->float('price', 2);
             $table->string('image');
-            $table->integer('stock');
+            $table->boolean('deleted')->default(false);
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });

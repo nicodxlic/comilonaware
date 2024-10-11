@@ -29,7 +29,8 @@ class ProductController extends Controller
                 'name' => $request->input('name'),
                 'image' => $request->input('image'),
                 'price' => $request->input('price'),
-                'stock' => $request->input('stock'),
+                'deleted' => $request->input('deleted'),
+                'enabled' => $request->input('enabled'),
             ]);
     
             return 'Articulo creado con éxito';
@@ -54,15 +55,22 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->image = $request->image;
         $product->price = $request->price;
-        $product->stock = $request->stock;
+        $product->deleted = $request->deleted;
+        $product->enabled = $request->enabled;
 
         $product->save();
         return $product;
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, string $id)
     {
-        $product = Product::destroy($request->id);
+        $product = Product::findOrFail($id);
+        if($product->deleted == 1){
+            $product->deleted = 0;
+        } else if($product->deleted == 0) {
+            $product->deleted = 1;
+        }
+        $product->save();
         return $product;
     }
 
