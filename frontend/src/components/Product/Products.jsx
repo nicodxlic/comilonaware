@@ -18,10 +18,10 @@ const Products = () => {
 
     const getAllProducts = async () => {
        const response = await axios.get(`${endpoint}/products`)
-       if(response.data.length === 0){
+       let sortedOrders = response.data.filter(product => product.deleted !== 1)
+       if(sortedOrders.length === 0){
         setProductMesage('No se han encontrado productos')
        } else{
-        let sortedOrders = response.data.filter(product => product.deleted !== 1)
         sortedOrders = sortedOrders.sort((a, b) => {
         return a.enabled === b.enabled ? 0 : a.enabled ? -1 : 1;
       });
