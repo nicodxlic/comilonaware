@@ -33,10 +33,8 @@ function App() {
         <Route path='/create-order' element={ <CreateOrder/>} />
       </Routes>
       </BrowserRouter>
-      <header className="App-header">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
       <title>ComilonaWare</title>
-      </header>
     </div>
   );
 }

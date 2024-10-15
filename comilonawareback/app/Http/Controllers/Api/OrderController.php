@@ -46,12 +46,31 @@ class OrderController extends Controller
         //
     }
 
+    public function update(Request $request, string $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->table = $request->table;
+        $order->price = $request->price;
+        $order->status = $request->status;
+
+        $order->save();
+        return $order;
+    }
+
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function updateStatus(Request $request, string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $status = $request->input('status');
+        if($status == 'in process' || $status == 'pending' ||
+        $status == 'ready' || $status == 'delivered' || 
+        $status == 'canceled' || $status == 'deleted'){
+            $order->status = $status;
+            $order->save();
+        }
+        return $order;
     }
 
     /**

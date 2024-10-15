@@ -20,9 +20,18 @@ const addProductToOrder = (product) => {
     };
 
     const store = async (e) => {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false, // Evita que el usuario cierre el loader clickeando fuera del modal
+            didOpen: () => {
+              Swal.showLoading(); // Activa el spinner
+            }
+          })
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
         await axios.post(endpoint, {table: table, price: price, status: status, products: selectedProducts})
+        Swal.close()
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
