@@ -8,7 +8,6 @@ const endpoint = 'http://localhost:8000/api/product'
 const CreateProduct = () => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState(1)
-    const [stock, setStock] = useState(1)
     const [image, setImage] = useState('')
     const navigate = useNavigate()
 
