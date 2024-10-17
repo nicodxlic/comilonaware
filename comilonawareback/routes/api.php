@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\Order_ProductController;
+use App\Http\Controllers\Api\TableController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -32,4 +33,9 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/order/{id}', 'update');
     Route::put('/order/status/{id}', 'updateStatus');
     Route::post('/order/delete', 'destroy');
+});
+
+Route::controller(TableController::class)->group(function () {
+    Route::get('/table/1', 'index');
+    Route::put('/table/{id}', 'update');
 });

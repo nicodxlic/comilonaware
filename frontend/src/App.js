@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes, RouterProvider, createBrowserRouter } fro
 import Home from './components/Home/Home.jsx';
 import CreateProduct from './components/Product/CreateProduct';
 import CreateOrder from './components/Order/CreateOrder';
+import EditTables from './components/Table/EditTables';
 
 
 
@@ -31,6 +32,7 @@ function App() {
         <Route path='/' element={ <Home/> }/>
         <Route path='/create-product' element={ <CreateProduct/>} />
         <Route path='/create-order' element={ <CreateOrder/>} />
+        <Route path='/edit-table' element={ <EditTables/>} />
       </Routes>
       </BrowserRouter>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
