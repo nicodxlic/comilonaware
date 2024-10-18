@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\Order_ProductController;
 use App\Http\Controllers\Api\TableController;
+use App\Http\Controllers\Api\PurchaseController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -24,6 +25,14 @@ Route::controller(ProductController::class)->group(function () {
 Route::controller(Order_ProductController::class)->group(function () {
     Route::get('/orders_products', 'index');
     Route::get('/orders_products/{id}', 'show');
+});
+
+Route::controller(PurchaseController::class)->group(function () {
+    Route::get('/purchase', 'index');
+    Route::get('/purchase/{id}', 'show');
+    Route::put('/purchase/{id}', 'update');
+    Route::post('/purchase', 'store');
+    Route::delete('/purchase/{id}', 'destroy');
 });
 
 Route::controller(OrderController::class)->group(function () {
