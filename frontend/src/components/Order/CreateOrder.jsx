@@ -139,10 +139,17 @@ const CreateProduct = () => {
               )}
             </div>
             <div className="border-t pt-4">
-              <p className="text-xl font-bold">Total: ${price}</p>
-              <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded mt-4" onClick={store}>
-                Guardar pedido
-              </button>
+                <p className="text-xl font-bold">Total: ${price}</p>
+                <button
+                  type="submit"
+                  disabled={selectedProducts.length === 0} // Deshabilitar si no hay productos seleccionados
+                  className={`px-6 py-2 rounded mt-4 text-white ${
+                    selectedProducts.length === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
+                  }`} 
+                  onClick={store}
+                >
+                  Guardar pedido
+                </button>
             </div>
           </div>
         </div>

@@ -23,7 +23,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
             didOpen: () => {
               Swal.showLoading(); // Activa el spinner
             }
-          })
+        })
         let status = e.target.value
         await axios.get('/sanctum/csrf-cookie');
         const response = await axios.put(`${endpoint}/order/status/` + order.id, {status: status})
@@ -37,8 +37,24 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
         getAllOrders()
     }
 
-    const deleteorder = (order) => {
-        console.log('por ahora no hago nada xd')
+    const deleteorder = async (orderId) => {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false, // Evita que el usuario cierre el loader clickeando fuera del modal
+            didOpen: () => {
+              Swal.showLoading(); // Activa el spinner
+            }
+        })
+        await axios.get('/sanctum/csrf-cookie');
+        const response = await axios.put(`${endpoint}/order/status/` + orderId, {status: 'deleted'})
+        Swal.close()
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Producto creado correctamente',
+        })
+        getAllOrders()
     }
 
     if(order.status === 'deleted'){

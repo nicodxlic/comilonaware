@@ -32,7 +32,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/order/{id}', 'show');
     Route::patch('/order/{id}', 'update');
     Route::put('/order/status/{id}', 'updateStatus');
-    Route::post('/order/delete', 'destroy');
+    Route::delete('/order/delete/{id}', 'destroy');
 });
 
 Route::controller(TableController::class)->group(function () {
