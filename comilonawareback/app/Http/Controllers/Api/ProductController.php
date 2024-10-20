@@ -35,7 +35,7 @@ class ProductController extends Controller
     
             return 'Articulo creado con éxito';
         } else {
-            return 'No se pudo cargar la imagen.';
+            return 'Ocurrio un error';
         }
         
     }

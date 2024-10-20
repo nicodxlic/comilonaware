@@ -1,6 +1,6 @@
 import HomeCheff from './HomeCheff.jsx';
 import ListOrders from '../Order/ListOrders.jsx';
-import Products from '../Product/Products.jsx'
+import HomeAdmin from './HomeAdmin.jsx';
 
 import React, { /*useEffect,*/ useState } from 'react'
 
@@ -24,7 +24,7 @@ const Home = () => {
 
             {role === 'cheff' && <HomeCheff />}
             {role === 'waiter' && <ListOrders />}
-            {role === 'admin' && <Products/>}
+            {role === 'admin' && <HomeAdmin/>}
         </div>
     )
 }
