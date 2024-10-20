@@ -3,12 +3,11 @@ import ListOrders from '../Order/ListOrders'
 
 import React, { /*useEffect,*/ useState } from 'react'
 
-const HomeAdmin = () => {
+const HomeAdmin = (role) => {
     const [screen, setScreen] = useState('orders')
-
     return(
         <div className="pb-44">
-            {screen === 'orders' && <ListOrders/>}
+            {screen === 'orders' && <ListOrders role={role}/>}
             {screen === 'products' && <Products/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">

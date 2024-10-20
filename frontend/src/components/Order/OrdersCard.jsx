@@ -37,7 +37,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
         getAllOrders()
     }
 
-    const deleteorder = async (orderId) => {
+    const deleteOrder = async (orderId) => {
         Swal.fire({
             title: 'Cargando...',
             text: 'Por favor espera',
@@ -76,7 +76,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
 
                 <br/>
                 <button
-                onClick={() => deleteorder(order.id)}
+                onClick={() => deleteOrder(order.id)}
                 className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2"
                 >
                     Eliminar
@@ -84,7 +84,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
                 <button 
                 type='button' 
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg" 
-                onClick={() => getOrderProducts(order)}
+                onClick={() => getOrderProducts(order.id)}
                 >
                     Ver productos
                 </button>

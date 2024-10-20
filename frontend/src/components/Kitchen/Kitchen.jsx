@@ -22,8 +22,8 @@ const Kitchen = () => {
         }
     }
 
-    const getOrderProducts = async (order) => {
-        const response = await axios.get(`${endpoint}/orders_products/` + order.id)
+    const getOrderProducts = async (id) => {
+        const response = await axios.get(`${endpoint}/orders_products/` + id)
         let productosHTML = '';
         for(let i = 0; i < response.data.length; i++){
           for(let j = 0; j < products.length; j++){
