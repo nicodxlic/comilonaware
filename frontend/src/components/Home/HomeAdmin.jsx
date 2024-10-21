@@ -1,5 +1,6 @@
 import Products from '../Product/Products.jsx'
 import ListOrders from '../Order/ListOrders'
+import {Link} from 'react-router-dom'
 
 import React, { /*useEffect,*/ useState } from 'react'
 
@@ -23,6 +24,12 @@ const HomeAdmin = (role) => {
                 >
                     Productos
                 </button>
+            </div>
+            <br/>
+            <div className='mt-20'>
+            <Link to="/edit-table" className='bg-green-500 text-white p-4 rounded-lg hover:bg-green-600'>
+                Editar mesas disponibles
+            </Link>
             </div>
         </div>
     )
