@@ -40,10 +40,8 @@ class TableController extends Controller
     public function update(Request $request, string $id)
     {
         $table = Table::findOrFail($id);
-        /*$request->validate([
-            'number' => 'required|integer|min:1',
-        ]); */
-        $table->number = $request->input('number');
+        $table->enabled = $request->enabled;
+
         $table->save();
         return $table;
     }
