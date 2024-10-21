@@ -18,6 +18,9 @@ class Order extends Model
     public function products(){
         return $this->belongsToMany(Product::class);
     }
+    public function purchase(){
+        return $this->belongsTo(Purchase::class);
+    }
     /*
     //Relación uno a muchos inversa con Users.
     public function user(){

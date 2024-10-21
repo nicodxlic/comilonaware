@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Purchase;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller
@@ -26,13 +27,16 @@ class PurchaseController extends Controller
     {
         if ($request) {
 
-            Product::create([
+            Purchase::create([
                 'id' => $request->input('id'),
                 'totalCost' => $request->input('totalCost'),
                 'payMethod' => $request->input('payMethod'),
                 'clientPay' => $request->input('clientPay'),
                 'changePay' => $request->input('changePay'),
             ]);
+            foreach ($request->orders as $order) {
+                $order->orders()->attach($order['id']);
+            }
     
             return 'Articulo creado con éxito';
         } else {
