@@ -18,4 +18,8 @@ class Purchase extends Model
         'clientPay',
         'changePay',
     ];
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
