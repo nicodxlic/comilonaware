@@ -10,7 +10,8 @@ class Table extends Model
     use HasFactory;
 
     protected $fillable = [
-        'number'
+        'number',
+        'enabled'
     ];
 
     public function orders(){

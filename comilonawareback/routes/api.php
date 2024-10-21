@@ -45,6 +45,6 @@ Route::controller(OrderController::class)->group(function () {
 });
 
 Route::controller(TableController::class)->group(function () {
-    Route::get('/table/1', 'index');
+    Route::get('/tables', 'index');
     Route::put('/table/{id}', 'update');
 });
