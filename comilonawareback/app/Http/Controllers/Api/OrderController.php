@@ -41,9 +41,17 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showPurchaseOrders(string $id)
     {
-        //
+        $orders = Order::where('purchase_id', $id)->get();
+        return $orders;
+
+    }
+
+    public function showTableOrders(string $table)
+    {
+        $orders = Order::where('table', $table)->get();
+        return $orders;
     }
 
     public function update(Request $request, string $id)
