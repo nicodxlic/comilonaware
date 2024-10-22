@@ -18,7 +18,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::patch('/product/disable/{id}', 'disable');
     Route::post('/product', 'store');
     Route::get('/product/{id}', 'show');
-    Route::put('/product/{id}', 'update');
+    Route::put('/product/update/{id}', 'update');
     Route::put('/product/delete/{id}', 'destroy');
 });
 

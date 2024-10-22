@@ -10,6 +10,7 @@ const CreateProduct = () => {
   const [price, setPrice] = useState(0)
   const [status] = useState('Pendiente')
   const [products, setProducts] = useState([])
+  const [message, setMessage] = useState('Cargando...')
   const [selectedProducts, setSelectedProducts] = useState([])
   const navigate = useNavigate()
 
@@ -25,7 +26,24 @@ const CreateProduct = () => {
 
   const getAllProducts = async () => {
     const response = await axios.get(`${endpoint}/products`)
-    setProducts(response.data)
+    if(response.data.length == 0){
+      setMessage('No se han encontrado productos.')
+    } else{
+      let areNoDeleted = false
+      let index = 0
+      while (areNoDeleted == false && index < response.data.length){
+        if(response.data[index].deleted == 0){
+          areNoDeleted = true
+          setProducts(response.data)
+        } else{
+          index = index + 1
+        }
+      }
+      if(areNoDeleted == false) {
+        setMessage('No se han encontrado productos.')
+      } else {console.log('')}
+      
+    }
   }
 
   useEffect(() => {
@@ -109,7 +127,7 @@ const CreateProduct = () => {
                 )
               ))
             ) : (
-              <p>No hay productos disponibles</p>
+              <p>{message}</p>
             )}
           </div>
         </div>
