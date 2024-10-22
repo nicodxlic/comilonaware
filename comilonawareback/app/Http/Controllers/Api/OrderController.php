@@ -60,6 +60,7 @@ class OrderController extends Controller
         $order->table = $request->table;
         $order->price = $request->price;
         $order->status = $request->status;
+        $order->purchase_id = $request->purchase_id;
 
         $order->save();
         return $order;

@@ -10,14 +10,16 @@ const CreatePurchase = () => {
     const [selectedTable, setSelectedTable] = useState(null)
     const [orders, setOrders] = useState([])
     const [totalCost, setTotalCost] = useState(0)
-    const [payMethod, setPayMethod] = useState(0)
+    const [payMethod, setPayMethod] = useState('')
     const [clientPay, setClientPay] = useState(0)
     const [changePay, setChangePay] = useState(0)
     const navigate = useNavigate()
 
     const store = async (e) => {
       e.preventDefault()
-      console.log(e.target.value)
+      setPayMethod('cash')
+      setChangePay(clientPay-totalCost)
+      let cambio = clientPay-totalCost
       Swal.fire({
           title: 'Cargando...',
           text: 'Por favor espera',
@@ -28,15 +30,16 @@ const CreatePurchase = () => {
         })
       e.preventDefault()
       await axios.get('/sanctum/csrf-cookie');
-      let response = await axios.post(`${endpoint}/purchase`, {totalCost: totalCost, payMethod : payMethod, clientPay: clientPay, changePay: changePay})
+      let response = await axios.post(`${endpoint}/purchase`, {orders: orders, totalCost: totalCost, payMethod : 'cash', clientPay: clientPay, changePay: clientPay-totalCost})
+      console.log(response.data)
       for (let i = 0; i < orders.length; i++) {
-        await axios.put(`${endpoint}/order/${orders[i].id}`, {table : orders[i].table, price : orders[i].price, status: orders[i].status, purchase_id : response.data.id})
+        await axios.patch(`${endpoint}/order/${orders[i].id}`, {table : orders[i].table, price : orders[i].price, status: orders[i].status, purchase_id : response.data.id})
       }
       Swal.close()
       Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
-          text: 'Compra registrada correctamente',
+          text: 'Compra registrada correctamente El cambio es de: $' + clientPay-totalCost + '.',
       })
       navigate('/')
   }

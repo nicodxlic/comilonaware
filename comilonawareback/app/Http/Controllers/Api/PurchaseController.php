@@ -28,18 +28,15 @@ class PurchaseController extends Controller
     {
         if ($request) {
 
-            Purchase::create([
+            $purchase = Purchase::create([
                 'id' => $request->input('id'),
                 'totalCost' => $request->input('totalCost'),
                 'payMethod' => $request->input('payMethod'),
                 'clientPay' => $request->input('clientPay'),
                 'changePay' => $request->input('changePay'),
             ]);
-            foreach ($request->orders as $order) {
-                $order->orders()->attach($order['id']);
-            }
     
-            return 'Articulo creado con éxito';
+            return $purchase;
         } else {
             return 'No se pudo cargar la imagen.';
         }
