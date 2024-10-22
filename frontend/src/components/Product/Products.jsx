@@ -4,9 +4,7 @@ import {axios} from '../../axiosConfig.js'
 import {Link} from 'react-router-dom'
 import ProductsCard from './ProductsCard.jsx'
 
-/**Hice una prueba para ver si traia los items de la BD
- * Posiblemente la funcionalidad de este componente cambie
- */
+
 const endpoint = 'http://localhost:8000/api'
 
 const Products = (role) => {

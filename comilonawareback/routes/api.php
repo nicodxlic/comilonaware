@@ -28,7 +28,7 @@ Route::controller(Order_ProductController::class)->group(function () {
 });
 
 Route::controller(PurchaseController::class)->group(function () {
-    Route::get('/purchase', 'index');
+    Route::get('/purchases', 'index');
     Route::get('/purchase/{id}', 'show');
     Route::put('/purchase/{id}', 'update');
     Route::post('/purchase', 'store');
