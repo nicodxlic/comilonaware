@@ -1,4 +1,4 @@
-import Purchase from '../Purchase/Purchase'
+import CreatePurchase from '../Purchase/CreatePurchase'
 import ListOrders from '../Order/ListOrders'
 
 import React, { /*useEffect,*/ useState } from 'react'
@@ -8,7 +8,7 @@ const HomeWaiter = (role) => {
     return(
         <div className="pb-44">
             {screen === 'orders' && <ListOrders role={role}/>}
-            {screen === 'purchase' && <Purchase/>}
+            {screen === 'purchase' && <CreatePurchase/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">
                 <button 

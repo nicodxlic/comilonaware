@@ -44,6 +44,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/order/{id}', 'update');
     Route::put('/order/status/{id}', 'updateStatus');
     Route::delete('/order/delete/{id}', 'destroy');
+    //Route::get('/get-orders', 'getOrdersByTable');
 });
 
 Route::controller(TableController::class)->group(function () {

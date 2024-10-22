@@ -79,10 +79,6 @@ const Products = (role) => {
                 <p className="text-center col-span-full">{productMesage}</p>
             )}
         </div>
-        <br/>
-        <Link to="/edit-table" className='bg-green-500 text-white p-4 rounded-lg'>
-                Editar cantidad de mesas
-            </Link>
     </div>
 )
 }
