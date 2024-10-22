@@ -32,7 +32,15 @@ const CreateProduct = () => {
         navigate('/')
     }
     return (
-    <div>
+    <div className="p-6">
+        <div className="w-full flex justify-start mb-6">
+            <button
+                className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
+                onClick={() => navigate('/')}
+            >
+                Atrás
+            </button>
+        </div>
         <h3>Agregar nuevo producto</h3>
         <form onSubmit={store}>
             <div className='mb-3'>

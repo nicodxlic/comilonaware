@@ -80,6 +80,14 @@ const CreateProduct = () => {
     <div className="flex flex-col h-screen">
       {/* Número de mesa arriba */}
       <div className="p-6 bg-gray-100">
+        <div className="w-full flex justify-start mb-6">
+            <button
+                className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
+                onClick={() => navigate('/')}
+            >
+                Atrás
+            </button>
+        </div>
         <h3 className="text-xl font-bold mb-4">Agregar nuevo pedido</h3>
         <div className="mb-3">
           <label className="form-label">Número de mesa</label>
