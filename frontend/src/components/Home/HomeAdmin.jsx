@@ -9,7 +9,7 @@ const HomeAdmin = (role) => {
     return(
         <div className="pb-44">
             {screen === 'orders' && <ListOrders role={role}/>}
-            {screen === 'products' && <Products/>}
+            {screen === 'products' && <Products role={'admin'}/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">
                 <button 

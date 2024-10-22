@@ -9,7 +9,7 @@ import ProductsCard from './ProductsCard.jsx'
  */
 const endpoint = 'http://localhost:8000/api'
 
-const Products = () => {
+const Products = (role) => {
 
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
@@ -17,17 +17,26 @@ const Products = () => {
     const [productMesage, setProductMesage] = useState('Cargando productos...')
 
     const getAllProducts = async () => {
-       const response = await axios.get(`${endpoint}/products`)
-       let sortedOrders = response.data.filter(product => product.deleted !== 1)
-       if(sortedOrders.length === 0){
-        setProductMesage('No se han encontrado productos')
-       } else{
-        sortedOrders = sortedOrders.sort((a, b) => {
-        return a.enabled === b.enabled ? 0 : a.enabled ? -1 : 1;
-      });
+        const response = await axios.get(`${endpoint}/products`)
+        if(role.role == 'admin'){
+            if(response.data.length === 0){
+                setProductMesage('No se han encontrado productos')
+            } else {
+                setProducts(response.data)
+                setFilteredProducts(response.data)
+            }
+        } else {
+            let sortedOrders = response.data.filter(product => product.deleted !== 1)
+        if(sortedOrders.length === 0){
+            setProductMesage('No se han encontrado productos')
+        } else{
+            sortedOrders = sortedOrders.sort((a, b) => {
+            return a.enabled === b.enabled ? 0 : a.enabled ? -1 : 1;
+        });
 
         setProducts(sortedOrders)
         setFilteredProducts(sortedOrders)
+       }
        }
     }    
     

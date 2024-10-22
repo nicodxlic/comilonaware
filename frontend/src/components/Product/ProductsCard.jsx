@@ -126,7 +126,7 @@ const ProductsCard = ({product, getAllProducts}) => {
         })
     }
   }
-  if (product.enabled == 0) {
+  if (product.enabled == 0 && product.deleted == 0) {
       return (
         <div key={product.id} className="bg-red-500 shadow-lg rounded-lg p-4">
           <p className="text-yellow-300 font-bold mb-4">Deshabilitado</p>
@@ -158,7 +158,7 @@ const ProductsCard = ({product, getAllProducts}) => {
           </button>
         </div>
       );
-  } else {
+  } else if (product.enabled == 1 && product.deleted == 0) {
     return (
       <div key={product.id} className="bg-white shadow-lg rounded-lg p-4">
         <h4 className="font-bold text-lg mb-2">{product.name}</h4>
@@ -189,6 +189,38 @@ const ProductsCard = ({product, getAllProducts}) => {
         </button>
       </div>
     );
+  } else {
+    return(
+      <div key={product.id} className="bg-gray-500 shadow-lg rounded-lg p-4">
+          <p className="text-yellow-300 font-bold mb-4">Eliminado</p>
+          <h4 className="font-bold text-lg mb-2 text-white">{product.name}</h4>
+          {/* Imagen del producto */}
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            className="w-full h-48 object-cover mb-4 rounded-lg"
+          />
+          <p className="text-white mb-2">Precio: ${product.price}</p>
+          <button
+          onClick={() => editProduct(product)}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2"
+        >
+          Editar
+        </button>
+          <button
+            onClick={() => deleteProduct(product.id)}
+            className="bg-gray-700 text-white px-4 py-2 rounded-lg mr-2"
+          >
+            Crear
+          </button>
+          <button
+            onClick={() => disableProduct(product.id)}
+            className="bg-green-500 text-white px-3 py-2 rounded-lg"
+          >
+            Habilitar
+          </button>
+        </div>
+    )
   }
     
 }

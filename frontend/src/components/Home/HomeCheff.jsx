@@ -9,7 +9,7 @@ const HomeCheff = () => {
     return (
         <div className="container pb-44">
             {screen === 'kitchen' && <Kitchen/>}
-            {screen === 'products' && <Products/>}
+            {screen === 'products' && <Products role={'cheff'}/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">
                 <button 
