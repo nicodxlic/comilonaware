@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { axios } from '../../axiosConfig.js'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import ListTables from '../Table/ListTables'
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -90,13 +91,9 @@ const CreateProduct = () => {
         </div>
         <h3 className="text-xl font-bold mb-4">Agregar nuevo pedido</h3>
         <div className="mb-3">
-          <label className="form-label">Número de mesa</label>
-          <input
-            value={table}
-            onChange={(e) => setTable(e.target.value)}
-            type="number"
-            className="form-control border rounded p-2 w-full"
-          />
+          <div className="mb-3">
+          <ListTables table={table} setTable={setTable} />
+        </div>
         </div>
       </div>
 
