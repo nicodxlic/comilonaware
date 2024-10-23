@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {axios} from '../../axiosConfig.js'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -7,10 +7,34 @@ const endpoint = 'http://localhost:8000/api/product'
 
 const CreateProduct = () => {
     const [name, setName] = useState('')
+    const [categories, setCategories] = useState([])
     const [price, setPrice] = useState(1)
     const [image, setImage] = useState('')
+    const [productCategory, setProductCategory] = useState([])
     const navigate = useNavigate()
 
+    const getAllCategories = async () => {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false, // Evita que el usuario cierre el loader clickeando fuera del modal
+            didOpen: () => {
+              Swal.showLoading(); // Activa el spinner
+            }
+        })
+        const response = await axios.get('http://localhost:8000/api/categories')
+        setCategories(response.data)
+        Swal.close()
+    }
+
+    useEffect ( () => {
+        getAllCategories()
+    }, [])
+
+    const handleCategoryChange = (e) => {
+        e.preventDefault()
+        setProductCategory(e.target.value)
+    }
     const store = async (e) => {
         Swal.fire({
             title: 'Cargando...',
@@ -19,10 +43,10 @@ const CreateProduct = () => {
             didOpen: () => {
               Swal.showLoading(); // Activa el spinner
             }
-          })
+        })
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
-        await axios.post(endpoint, {name: name, price: price, image: image, deleted: false, enabled: true})
+        await axios.post(endpoint, {name: name, price: price, image: image, deleted: false, enabled: true, category_id: productCategory})
         Swal.close()
         Swal.fire({
             icon: 'success',
@@ -70,8 +94,29 @@ const CreateProduct = () => {
                     className='form-control'
                 />
             </div>
+            <div className='mb-3'>
+                <label className='form-label'>Selecciona una categoria</label>
+                <br/>
+                <select
+                onChange={(e) => handleCategoryChange(e)}
+                >
+                    <option default value=''>Seleccione una categoria</option>
+                    {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                        {category.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <br/>
-            <button type='submit' className='btn btn-primary'>Guardar</button>
+            <button 
+            type='submit' 
+            className='btn btn-primary'
+            disabled={name === '' || 
+            price === '' || 
+            image === '' || 
+            productCategory.length === 0}
+            >Guardar</button>
         </form>
     </div>
     )

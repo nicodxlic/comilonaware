@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\Order_ProductController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\CategoryController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -20,6 +21,14 @@ Route::controller(ProductController::class)->group(function () {
     Route::get('/product/{id}', 'show');
     Route::put('/product/update/{id}', 'update');
     Route::put('/product/delete/{id}', 'destroy');
+});
+
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/categories', 'index');
+    Route::post('/category', 'store');
+    Route::get('/category/{id}', 'show');
+    Route::put('/category/update/{id}', 'update');
+    Route::put('/category/delete/{id}', 'destroy');
 });
 
 Route::controller(Order_ProductController::class)->group(function () {

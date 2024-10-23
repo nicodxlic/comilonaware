@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -25,17 +26,25 @@ class ProductController extends Controller
     {
         if ($request) {
 
-            Product::create([
+            $category = Category::find($request->input('category_id'));
+
+            if (!$category) {
+                return response()->json(['error' => 'Categoría no encontrada'], 404);
+            }
+
+            $product = Product::create([
                 'name' => $request->input('name'),
                 'image' => $request->input('image'),
                 'price' => $request->input('price'),
                 'deleted' => $request->input('deleted'),
                 'enabled' => $request->input('enabled'),
+                'category_id' => $category->id
             ]);
+            return $product;
     
-            return 'Articulo creado con éxito';
+            return response()->json(['message' => 'Producto creado con éxito', 'product' => $product], 201);
         } else {
-            return 'Ocurrio un error';
+            return response()->json(['error' => 'Ocurrió un error'], 400);
         }
         
     }
@@ -52,6 +61,17 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::findOrFail($id);
+
+        if ($request->input('category_id')) {
+            $category = Category::find($request->input('category_id'));
+
+            if (!$category) {
+                return response()->json(['error' => 'Categoría no encontrada'], 404);
+            }
+
+            $product->category_id = $category->id; // Asignamos la nueva categoría
+        }
+
         $product->name = $request->name;
         $product->image = $request->image;
         $product->price = $request->price;

@@ -14,11 +14,16 @@ class Product extends Model
         'price',
         'image',
         'deleted',
-        'enabled'
+        'enabled',
+        'category_id'
     ];
 
     public function orders(){
         return $this->belongsToMany(Order::class);
+    }
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
     /*
     //Relación uno a muchos inversa con Users.
