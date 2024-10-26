@@ -7,7 +7,8 @@ const ListTables = ({ table, setTable }) => {
     useEffect(() => {
     const getTables = async () => {
         const response = await axios.get('http://localhost:8000/api/tables')
-        setTables(response.data)
+        const enabledTables = response.data.filter(t => t.enabled);
+        setTables(enabledTables)
     }
     getTables()
     }, [])

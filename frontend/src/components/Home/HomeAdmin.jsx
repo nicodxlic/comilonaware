@@ -2,6 +2,7 @@ import Products from '../Product/Products.jsx'
 import ListOrders from '../Order/ListOrders'
 import PurchaseList from '../Purchase/PurchaseList.jsx'
 import {Link} from 'react-router-dom'
+import EditTable from '../Table/EditTables.jsx'
 
 import React, { /*useEffect,*/ useState } from 'react'
 
@@ -12,6 +13,7 @@ const HomeAdmin = (role) => {
             {screen === 'orders' && <ListOrders role={role}/>}
             {screen === 'products' && <Products role={'admin'}/>}
             {screen === 'purchases' && <PurchaseList/>}
+            {screen === 'tables' && <EditTable/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">
                 <button 
@@ -35,7 +37,7 @@ const HomeAdmin = (role) => {
             </div>
             <br/>
             <div className='mt-20'>
-            <Link to="/edit-table" className='bg-green-500 text-white p-4 rounded-lg hover:bg-green-600'>
+            <Link to="/edit-table" className='btn btn-success mt-2 ml-2 text-white'>
                 Editar mesas disponibles
             </Link>
             </div>
