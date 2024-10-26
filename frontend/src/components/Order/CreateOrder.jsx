@@ -11,6 +11,10 @@ const CreateProduct = () => {
   const [price, setPrice] = useState(0)
   const [status] = useState('Pendiente')
   const [products, setProducts] = useState([])
+  const [shownProducts, setShownProducts] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [categories, setCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('')
   const [message, setMessage] = useState('Cargando...')
   const [selectedProducts, setSelectedProducts] = useState([])
   const navigate = useNavigate()
@@ -26,7 +30,15 @@ const CreateProduct = () => {
   }
 
   const getAllProducts = async () => {
-    const response = await axios.get(`${endpoint}/products`)
+    Swal.fire({
+      title: 'Cargando...',
+      text: 'Por favor espera',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    })
+    let response = await axios.get(`${endpoint}/products`)
     if(response.data.length == 0){
       setMessage('No se han encontrado productos.')
     } else{
@@ -45,11 +57,28 @@ const CreateProduct = () => {
       } else {console.log('')}
       
     }
+    response = await axios.get(`${endpoint}/categories`)
+    setCategories(response.data)
+    setMessage('No se han encontrado productos.')
+    Swal.close()
   }
 
   useEffect(() => {
     getAllProducts()
   }, [])
+
+  useEffect(() => {
+    // Filtrar productos según el término de búsqueda y la categoría seleccionada
+    const filtered = products.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedCategory === '' || product.category_id === parseInt(selectedCategory))
+    )
+    setShownProducts(filtered)
+  }, [searchTerm, selectedCategory, products])
+
+  const handleCategoryChange = (e) => {
+      setSelectedCategory(e.target.value) // Actualiza la categoría seleccionada
+  }
 
   const store = async (e) => {
     Swal.fire({
@@ -102,9 +131,27 @@ const CreateProduct = () => {
         {/* Lista de productos (izquierda) */}
         <div className="w-1/2 p-4 bg-gray-50 overflow-y-auto">
           <h4 className="text-lg font-bold mb-4">Productos</h4>
+          <input
+            type='text' 
+            placeholder='Buscar productos'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-1/3 p-3 mb-4 border border-gray-300 rounded-md"
+          />
+          <select 
+          onChange={(e) => handleCategoryChange(e)}
+          className="p-2 ml-4 border border-gray-300 rounded-md"
+          >
+            <option value="">Seleccionar una categoria</option>
+            {categories.map((category, index) => (
+                <option key={index} value={category.id}>
+                    {category.name}
+                </option>
+            ))}
+            </select>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products.length > 0 ? (
-              products.map(product => (
+            {shownProducts.length > 0 ? (
+              shownProducts.map(product => (
                 product.deleted == 0 && product.enabled == 1 ? (
                   <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden border-2">
                     <div className="relative">
