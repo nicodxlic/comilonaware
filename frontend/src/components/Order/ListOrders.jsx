@@ -89,67 +89,71 @@ const ListOrders = (role) => {
 
   return (
     <div>
-    <table className='table table-striped'>
-      <thead className='bg-primary text-white text-center'>
-        <tr>
-          <th>Número de mesa</th>
-          <th>Total</th>
-          <th>Estado</th>
-          <th>Productos</th>
-          {role.role.role == 'admin' ? (<th>Acciones</th>) : ('')}
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        { orders.map ((order) => (
-          order.status == 'deleted' && role.role.role !== 'admin' ? ('') : 
-          (
-          <tr key={order.id}>
-            <td> {order.table} </td>
-            <td> {'$' + order.price} </td>
-            <td>
-              <select
-              value={order.status} 
-              onChange={(e) => handleStatusChange(e, order.id)}
-              >
-                <option value="pending">Pendiente</option>
-                <option value="in process">En proceso</option>
-                <option value="ready">Listo para entregar</option>
-                <option value="delivered">Entregado</option>
-                <option value="canceled">Cancelado</option>
-                {role.role.role == 'admin' ? (
-                  <option value="deleted">Eliminado</option>
-                ) : 
-                ('')
-                }
-              </select>
-            </td>
-            <td>
-              <button
-              type='button'
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg"
-              onClick={() => getOrderProducts(order.id)}
-              >
-                Ver productos
-              </button> 
-            </td>
-            {role.role.role == 'admin' ? (
-              <td>
-                <button
-                type='button'
-                className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                onClick={() => deleteOrder(order.id)}
-                >
-                  Eliminar pedido
-                </button> 
-              </td>
-            ) : ('')}
-          </tr>
-        )))}
-      </tbody>
-    </table>
-    <br/>
-    <Link to="/create-order" className='btn btn-success mt-2 ml-2 text-white'>Agregar nuevo pedido</Link>
+      <table className="table table-striped w-full">
+        <thead className="bg-primary text-white text-center">
+            <tr>
+                <th className="text-center">N° de pedido</th>
+                <th className="text-center">Número de mesa</th>
+                <th className="text-center">Total</th>
+                <th className="text-center">Estado</th>
+                <th className="text-center">Productos</th>
+                {role.role.role === 'admin' && <th className="text-center">Acciones</th>}
+            </tr>
+        </thead>
+        <tbody className="text-center">
+            {orders.map((order) => (
+                order.status === 'deleted' && role.role.role !== 'admin' ? null : (
+                    <tr key={order.id}>
+                        <td className="text-center">{order.id}</td>
+                        <td className="text-center">{order.table}</td>
+                        <td className="text-center">{'$' + order.price}</td>
+                        <td className="text-center">
+                            <select
+                                value={order.status}
+                                onChange={(e) => handleStatusChange(e, order.id)}
+                                className="text-center"
+                            >
+                                <option value="pending">Pendiente</option>
+                                <option value="in process">En proceso</option>
+                                <option value="ready">Listo para entregar</option>
+                                <option value="delivered">Entregado</option>
+                                <option value="canceled">Cancelado</option>
+                                {role.role.role === 'admin' && (
+                                    <option value="deleted">Eliminado</option>
+                                )}
+                            </select>
+                        </td>
+                        <td className="text-center">
+                            <button
+                                type="button"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg text-center"
+                                onClick={() => getOrderProducts(order.id)}
+                            >
+                                Ver productos
+                            </button>
+                        </td>
+                        {role.role.role === 'admin' && (
+                            <td className="text-center">
+                                <button
+                                    type="button"
+                                    className="bg-red-500 text-white px-4 py-2 rounded-lg text-center"
+                                    onClick={() => deleteOrder(order.id)}
+                                >
+                                    Eliminar pedido
+                                </button>
+                            </td>
+                        )}
+                    </tr>
+                )
+            ))}
+        </tbody>
+      </table>
+      <br />
+      <Link to="/create-order" className="btn btn-success mt-2 ml-2 text-white">
+          Agregar nuevo pedido
+      </Link>
     </div>
+
   )
 }
 
