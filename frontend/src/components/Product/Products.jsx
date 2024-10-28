@@ -13,7 +13,7 @@ const Products = (role) => {
     const [searchTerm, setSearchTerm] = useState('')
     const [selectedCategory, setSelectedCategory] = useState('')
     const [productMesage, setProductMesage] = useState('Cargando productos...')
-
+//
     const getAllProducts = async () => {
         Swal.fire({
             title: 'Cargando...',
