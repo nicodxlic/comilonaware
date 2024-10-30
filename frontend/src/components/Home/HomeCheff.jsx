@@ -1,10 +1,13 @@
 import Products from '../Product/Products.jsx';
 import Kitchen from '../Kitchen/Kitchen.jsx';
+import { useNavigate } from 'react-router-dom'
 
 import React, { /*useEffect,*/ useState } from 'react'
 
 const HomeCheff = () => {
     const [screen, setScreen] = useState('kitchen')
+
+    const navigate = useNavigate()
 
     return (
         <div className="container pb-44">
@@ -23,6 +26,12 @@ const HomeCheff = () => {
                 onClick={() => setScreen('products')}
                 >
                     Productos
+                </button>
+                <button 
+                className="bg-green-500 text-white px-24 py-6 rounded-lg hover:bg-green-600"
+                onClick={() => navigate('/spoonacular')}
+                >
+                    Spoonacular
                 </button>
             </div>
     </div>
