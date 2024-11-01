@@ -7,7 +7,7 @@ import CreateOrder from './components/Order/CreateOrder';
 import EditTables from './components/Table/EditTables';
 import CreatePurchase from './components/Purchase/CreatePurchase';
 import SpoonacularSearch from './components/Framework/SpoonacularSearch.jsx';
-
+import SpoonacularRecipe from './components/Framework/SpoonacularRecipe';
 
 /*const router = createBrowserRouter([
   {
@@ -35,6 +35,7 @@ function App() {
         <Route path='/edit-table' element={ <EditTables/>} />
         <Route path='/create-purchase' element={ <CreatePurchase/>} />
         <Route path='/spoonacular' element={ <SpoonacularSearch/>} />
+        <Route path='/spoonacular/:id' element={ <SpoonacularRecipe/>} />
       </Routes>
       </BrowserRouter>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
