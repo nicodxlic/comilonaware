@@ -22,6 +22,11 @@ const SpoonacularRecipe = () => {
                 const response = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=3c4b2111c77f42be863ef43cb23a14ea&`);
                 setRecipe(response.data);
             } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '¡Ha ocurrido un error!',
+                    text: error,
+                  });
                 console.error("Error al obtener los detalles de la receta:", error);
             }
 

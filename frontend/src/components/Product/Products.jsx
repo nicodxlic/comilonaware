@@ -31,6 +31,7 @@ const Products = (role) => {
             } else {
                 setProducts(response.data)
                 setShownProducts(response.data) // Inicializar shownProducts
+                Swal.close()
             }
         } else {
             let sortedOrders = response.data.filter(product => product.deleted !== 1)

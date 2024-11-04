@@ -12,22 +12,31 @@ class PurchaseController extends Controller
     // Método para listar todas las compras
     public function index()
     {
-        $purchases = Purchase::all();
-        return response()->json($purchases);
+        try {
+            $purchases = Purchase::all();
+            return response()->json($purchases, 200);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al obtener las compras', 'details' => $e->getMessage()], 500);
+        }
     }
 
     // Método para mostrar una compra en particular
     public function show($id)
     {
-        $purchase = Purchase::findOrFail($id);
-        return response()->json($purchase);
+        try {
+            $purchase = Purchase::findOrFail($id);
+            return response()->json($purchase, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Compra no encontrada', 'details' => $e->getMessage()], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al obtener la compra', 'details' => $e->getMessage()], 500);
+        }
     }
 
     // Método para crear una nueva compra
     public function store(Request $request)
     {
-        if ($request) {
-
+        try {
             $purchase = Purchase::create([
                 'id' => $request->input('id'),
                 'totalCost' => $request->input('totalCost'),
@@ -35,37 +44,47 @@ class PurchaseController extends Controller
                 'clientPay' => $request->input('clientPay'),
                 'changePay' => $request->input('changePay'),
             ]);
-    
-            return $purchase;
-        } else {
-            return 'No se pudo cargar la imagen.';
+
+            return response()->json($purchase, 201);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al crear la compra', 'details' => $e->getMessage()], 500);
         }
     }
 
     // Método para actualizar una compra existente
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'totalCost' => 'numeric',
-            'payMethod' => 'string',
-            'clientPay' => 'numeric',
-            'changePay' => 'numeric',
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'totalCost' => 'numeric',
+                'payMethod' => 'string',
+                'clientPay' => 'numeric',
+                'changePay' => 'numeric',
+            ]);
 
-        $purchase = Purchase::findOrFail($id);
-        $purchase->update($validatedData);
+            $purchase = Purchase::findOrFail($id);
+            $purchase->update($validatedData);
 
-        return $purchase;
+            return response()->json($purchase, 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Compra no encontrada', 'details' => $e->getMessage()], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al actualizar la compra', 'details' => $e->getMessage()], 500);
+        }
     }
 
     // Método para eliminar una compra
     public function destroy($id)
     {
-        $purchase = Purchase::findOrFail($id);
-        $purchase->delete();
+        try {
+            $purchase = Purchase::findOrFail($id);
+            $purchase->delete();
 
-        return response()->json([
-            'message' => 'Purchase deleted successfully',
-        ]);
+            return response()->json(['message' => 'Compra eliminada con éxito'], 200);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['error' => 'Compra no encontrada', 'details' => $e->getMessage()], 404);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Error al eliminar la compra', 'details' => $e->getMessage()], 500);
+        }
     }
 }
