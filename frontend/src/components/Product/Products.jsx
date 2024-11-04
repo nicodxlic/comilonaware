@@ -31,6 +31,8 @@ const Products = (role) => {
             } else {
                 setProducts(response.data)
                 setShownProducts(response.data) // Inicializar shownProducts
+                response = await axios.get(`${endpoint}/categories`)
+                setCategories(response.data)
                 Swal.close()
             }
         } else {
