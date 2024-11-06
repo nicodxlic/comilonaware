@@ -47,13 +47,17 @@ const CreatePurchase = () => {
 
       if (currency !== 'ARS') {
         try {
-          const exchangeRate = await axios.get(`https://cors-anywhere.herokuapp.com/https://api.exchangeratesapi.io/v1/latest?access_key=714d38fbfd9f5571b55beb25514722fb&base=EUR&symbols=ARS`, {
+          const exchangeRate = await axios.get(`https://cors-anywhere.herokuapp.com
+            /https://api.exchangeratesapi.io/v1/latest
+            ?access_key=${apiKey}
+            &base=${currency}
+            &symbols=ARS`, 
+            {
             withCredentials: false,
             headers: {
               'X-Requested-With': 'XMLHttpRequest'
           }
           });
-          console.log(exchangeRate.data.rates.ARS)
           exchangedAmount = clientPay * exchangeRate.data.rates.ARS;
         } catch (error) {
           showErrorAlert('Error', 'Error al obtener la tasa de cambio');
@@ -200,11 +204,7 @@ const CreatePurchase = () => {
           <p>Moneda:</p>
           <select onChange={(e) => setCurrency(e.target.value)}>
             <option default value='ARS'>ARS</option>
-            <option value='USD'>USD</option>
             <option value='EUR'>EUR</option>
-            <option value='MXN'>MXN</option>
-            <option value='CNY'>CNY</option>
-            <option value='CLP'>CLP</option>
           </select>
           <br/>
         </div>
