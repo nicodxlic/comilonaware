@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { axios } from '../../axiosConfig'; 
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 
 const endpoint = 'http://localhost:8000/api';
 const apiKey = '714d38fbfd9f5571b55beb25514722fb';
@@ -11,10 +12,13 @@ const CreatePurchase = () => {
   const [orders, setOrders] = useState([]);
   const [selectedTable, setSelectedTable] = useState(0)
   const [totalCost, setTotalCost] = useState(0);
-  const [payMethod, setPayMethod] = useState('');
+  const [payMethod, setPayMethod] = useState('cash');
   const [clientPay, setClientPay] = useState(0);
   const [currency, setCurrency] = useState('ARS');
+  const [preferenceId, setPreferenceId] = useState(null)
   const navigate = useNavigate();
+
+  initMercadoPago('TEST-08637446-f73c-43b3-a3e2-c02b3a8ccc84', {locale: 'es-AR'});
 
   const showErrorAlert = (title, text) => {
     Swal.fire({
@@ -39,8 +43,6 @@ const CreatePurchase = () => {
         Swal.showLoading();
       }
     });
-
-    setPayMethod('cash');
     
     try {
       let exchangedAmount = clientPay;
@@ -164,6 +166,29 @@ const CreatePurchase = () => {
     fetchOrdersByTable(tableId);
   };
 
+const CreatePreference = async () => {
+  try {
+    const response = await axios.post(`${endpoint}/create-preference`, {
+      items: orders,
+      unit_price: totalCost,
+      table: selectedTable,
+    });
+
+
+    const { id } = response.data
+    return id
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleBuy = async () => {
+    const id = await CreatePreference()
+    if (id) {
+      setPreferenceId(id)
+    }
+  }
+
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
       <h3 className="text-2xl font-bold mb-6 text-center">Registrar Pago</h3>
@@ -201,6 +226,9 @@ const CreatePurchase = () => {
             className="block w-full bg-gray-200 border border-gray-300 rounded-lg py-2 px-3" 
             placeholder="$:"
           />
+          <div className="mb-4">
+          <label className="block text-gray-700 text-xl font-bold mb-2">Método de Pago:</label>
+</div>
           <p>Moneda:</p>
           <select onChange={(e) => setCurrency(e.target.value)}>
             <option default value='ARS'>ARS</option>
@@ -208,11 +236,18 @@ const CreatePurchase = () => {
           </select>
           <br/>
         </div>
-
         <button type='submit' className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 w-full">
           Registrar Pago
         </button>
+        <button type="button" className='bg-blue-500 text-white mt-8 rounded-md p-4' onClick={handleBuy}>
+        Generar y Pagar con MercadoPago
+        </button>
       </form>
+
+
+      <div className='mt-10'>
+        {preferenceId && <Wallet initialization={{ preferenceId }} />}
+      </div>
     </div>
   );
 };
