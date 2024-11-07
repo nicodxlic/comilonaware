@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
         ]); */
 
         $this->call([
+            CategoriesSeeder::class,
             ProductSeeder::class,
             TableSeeder::class,
-            CategoriesSeeder::class
         ]);
     }
 }
