@@ -133,13 +133,12 @@ const CreatePurchase = () => {
           placeholder="$:"
         />
       </div>
+      <button type='submit' className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 w-full mt-4">
+        Registrar Pago
+      </button>
       <button type="button" className='bg-blue-500 text-white mt-8 rounded-md p-4' onClick={handleBuy}>
         Pagar con MercadoPago
         </button>
-
-      <button type='submit' className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 w-full">
-        Registrar Pago
-      </button>
       </form>
       <div className='mt-10'>
         {preferenceId && <Wallet initialization={{ preferenceId }} />}
