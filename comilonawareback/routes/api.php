@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Order_ProductController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\MercadoPagoController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -60,3 +61,16 @@ Route::controller(TableController::class)->group(function () {
     Route::get('/tables', 'index');
     Route::put('/table/{id}', 'update');
 });
+
+Route::controller(MercadoPagoController::class)->group(function () {
+    Route::post('/create-preference', 'createPreference');
+});
+Route::get('/payment/success', function () {
+    return "Pago realizado exitosamente";
+})->name('payment.success');
+Route::get('/payment/failure', function () {
+    return "El pago ha fallado";
+})->name('payment.failure');
+Route::get('/payment/pending', function () {
+    return "El pago está pendiente";
+})->name('payment.pending');

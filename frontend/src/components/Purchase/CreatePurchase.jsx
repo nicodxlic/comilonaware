@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { axios } from '../../axiosConfig'; 
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -13,11 +14,14 @@ const CreatePurchase = () => {
     const [payMethod, setPayMethod] = useState('')
     const [clientPay, setClientPay] = useState(0)
     const [changePay, setChangePay] = useState(0)
+    const [preferenceId, setPreferenceId] = useState(null)
+
+    initMercadoPago('TEST-08637446-f73c-43b3-a3e2-c02b3a8ccc84', {locale: 'es-AR'});
+    
     const navigate = useNavigate()
 
     const store = async (e) => {
       e.preventDefault()
-      setPayMethod('cash')
       setChangePay(clientPay-totalCost)
       let cambio = clientPay-totalCost
       Swal.fire({
@@ -70,6 +74,26 @@ const CreatePurchase = () => {
       setSelectedTable(tableId)
       fetchOrdersByTable(tableId)
     }
+
+    const CreatePreference = async () => {
+      try {
+        const response = await axios.post(`${endpoint}/create-preference`, {
+          items: orders,
+          unit_price: totalCost,
+          table: selectedTable,
+        });
+        const { id } = response.data
+        return id
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      const handleBuy = async () => {
+        const id = await CreatePreference()
+        if (id) {
+          setPreferenceId(id)
+        }
+      }
   
     return (
       <div className="max-w-lg mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -109,11 +133,17 @@ const CreatePurchase = () => {
           placeholder="$:"
         />
       </div>
+      <button type="button" className='bg-blue-500 text-white mt-8 rounded-md p-4' onClick={handleBuy}>
+        Pagar con MercadoPago
+        </button>
 
       <button type='submit' className="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 w-full">
         Registrar Pago
       </button>
       </form>
+      <div className='mt-10'>
+        {preferenceId && <Wallet initialization={{ preferenceId }} />}
+      </div>
     </div>
     );
   };
