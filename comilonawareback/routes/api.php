@@ -60,6 +60,8 @@ Route::controller(OrderController::class)->group(function () {
 Route::controller(TableController::class)->group(function () {
     Route::get('/tables', 'index');
     Route::put('/table/{id}', 'update');
+    Route::post('/tables', 'store');
+    Route::delete('/table/{id}', 'destroy');
 });
 
 Route::controller(MercadoPagoController::class)->group(function () {

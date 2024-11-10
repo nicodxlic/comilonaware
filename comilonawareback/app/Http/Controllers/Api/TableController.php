@@ -8,6 +8,7 @@ use App\Models\Table;
 
 class TableController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -23,7 +24,17 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tableCount = Table::count();
+        if ($request) {
+            if ($tableCount >= 20){
+                return response()->json(['error' => 'No se pueden agregar más mesas. Límite alcanzado.'], 400);
+            }
+            $lastTableNumber = Table::max('number');
+            $newTable = Table::create([
+                'number' => $lastTableNumber + 1,
+                'enabled' => true
+            ]);
+        }
     }
 
     /**
@@ -49,8 +60,16 @@ class TableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy()
     {
-        //
+        $tableCount = Table::count();
+        if ($tableCount <= 5) {
+            return response()->json(['error' => 'No se pueden eliminar más mesas. Mínimo de mesas alcanzado.'], 400);
+        }
+
+        $lastTable = Table::latest('id')->first();
+        $lastTable->delete();
+
+        return response()->json(['message' => 'Mesa eliminada con éxito'], 200);
     }
 }

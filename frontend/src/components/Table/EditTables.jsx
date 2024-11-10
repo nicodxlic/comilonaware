@@ -10,11 +10,12 @@ const EditTable = () => {
   const [selectedTables, setSelectedTables] = useState([]);
   const navigate = useNavigate();
 
+  const getTables = async () => {
+    const response = await axios.get(`${endpoint}tables`);
+    setTables(response.data);
+  };
+
   useEffect(() => {
-    const getTables = async () => {
-      const response = await axios.get(`${endpoint}tables`);
-      setTables(response.data);
-    };
     getTables();
   }, []);
 
@@ -57,15 +58,61 @@ const EditTable = () => {
         text: 'Mesas editadas correctamente.',
       });
 
-      navigate('/');
+      navigate('/edit-table');
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'Hubo un problema al editar las mesas.',
-      });
+      })
     }
-  };
+  }
+
+  const addTable = async () => {
+    if (tables.length >= 20) {
+        Swal.fire('Límite alcanzado', 'No se pueden añadir más de 20 mesas.', 'error');
+        return;
+    }
+    Swal.fire({
+        title: '¿Añadir una nueva mesa?',
+        text: 'Se agregará una mesa.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Añadir',
+        cancelButtonText: 'Cancelar',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const newNumber = tables.length ? tables[tables.length - 1].number + 1 : 1;
+            const response = await axios.post(`${endpoint}tables`, { number: newNumber, enabled: true });
+            setTables([...tables, response.data]);
+            Swal.fire('Mesa añadida', 'La nueva mesa ha sido añadida correctamente.', 'success');
+            await getTables()
+        }
+    });
+};
+
+
+  const removeTable = async () => {
+    if (tables.length <= 5) {
+        Swal.fire('Límite alcanzado', 'No se pueden tener menos de 5 mesas.', 'error');
+        return;
+    }
+    Swal.fire({
+        title: '¿Eliminar la última mesa?',
+        text: 'Se eliminará la última mesa del listado.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            const lastTable = tables[tables.length - 1];
+            await axios.delete(`${endpoint}table/${lastTable.id}`);
+            setTables(tables.slice(0, -1));
+            Swal.fire('Mesa eliminada', 'La última mesa ha sido eliminada correctamente.', 'success');
+        }
+    })
+}
 
   return (
     <div className="p-6">
@@ -93,6 +140,20 @@ const EditTable = () => {
           Guardar cambios
         </button>
       </div>
+      <div className="mt-6 flex space-x-4">
+                <button
+                    onClick={addTable}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                >
+                    Añadir una mesa
+                </button>
+                <button
+                    onClick={removeTable}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg"
+                >
+                    Eliminar una mesa
+                </button>
+            </div>
     </div>
   );
 };
