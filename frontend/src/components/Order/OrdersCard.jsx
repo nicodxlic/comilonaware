@@ -52,7 +52,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
-            text: 'Producto creado correctamente',
+            text: 'Producto eliminado correctamente',
         })
         getAllOrders()
     }
@@ -66,13 +66,30 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
                 <p className="text-gray-700 mb-2">mesa: {order.table}</p>
                 <p className="text-gray-700 mb-4">Estado: {order.status}</p>
 
-                <select className="mb-4" value={order.status} onChange={handleStatusChange}>
-                    <option value="pending">Pendiente</option>
-                    <option value="in process">En proceso</option>
-                    <option value="ready">Listo para entregar</option>
-                    <option value="delivered">Entregado</option>
-                    <option value="canceled">Cancelado</option>
-                </select>
+                {order.status === 'pending' ? (
+                    <button
+                    type='button'
+                    value='in process'
+                    onClick={(e) => handleStatusChange(e)}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg mb-2"
+                    >
+                        en proceso
+                    </button>
+                ) : (
+                    ''
+                )}
+                {order.status === 'in process' ? (
+                    <button
+                    type='button'
+                    value='ready'
+                    onClick={(e) => handleStatusChange(e)}
+                    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg mb-2"
+                    >
+                        Listo para entregar
+                    </button>
+                ) : (
+                    ''
+                )}
 
                 <br/>
                 <button

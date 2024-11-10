@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {axios} from '../../axiosConfig.js'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import Header from '../Header/Header.jsx'
 
 const endpoint = 'http://localhost:8000/api/product'
 
@@ -9,6 +10,7 @@ const CreateProduct = () => {
     const [name, setName] = useState('')
     const [categories, setCategories] = useState([])
     const [price, setPrice] = useState(1)
+    const [description, setDescription] = useState([])
     const [image, setImage] = useState('')
     const [productCategory, setProductCategory] = useState([])
     const navigate = useNavigate()
@@ -46,7 +48,14 @@ const CreateProduct = () => {
         })
         e.preventDefault()
         await axios.get('/sanctum/csrf-cookie');
-        await axios.post(endpoint, {name: name, price: price, image: image, deleted: false, enabled: true, category_id: productCategory})
+        await axios.post(endpoint, {name: name,
+            price: price,
+            image: image,
+            description: description,
+            deleted: false,
+            enabled: true,
+            category_id: productCategory
+        })
         Swal.close()
         Swal.fire({
             icon: 'success',
@@ -56,6 +65,7 @@ const CreateProduct = () => {
         navigate('/')
     }
     return (
+    <div> <Header/>
     <div className="p-6">
         <div className="w-full flex justify-start mb-6">
             <button
@@ -95,6 +105,15 @@ const CreateProduct = () => {
                 />
             </div>
             <div className='mb-3'>
+                <label className='form-label'>Descripcion</label>
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className='form-control'
+                    rows="4"
+                />
+            </div>
+            <div className='mb-3'>
                 <label className='form-label'>Selecciona una categoria</label>
                 <br/>
                 <select
@@ -114,10 +133,12 @@ const CreateProduct = () => {
             className='btn btn-primary'
             disabled={name === '' || 
             price === '' || 
-            image === '' || 
+            image === '' ||
+            description === '' || 
             productCategory.length === 0}
             >Guardar</button>
         </form>
+    </div>
     </div>
     )
 }

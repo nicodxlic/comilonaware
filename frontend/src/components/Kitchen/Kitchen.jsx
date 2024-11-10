@@ -13,10 +13,25 @@ const Kitchen = () => {
 
     const getAllOrders = async () => {
         let response = await axios.get(`${endpoint}/orders`)
+        
+        // Filtrar las órdenes con status "delivered" o "canceled"
+        const filteredOrders = response.data.filter(order => 
+            order.status !== 'delivered' && order.status !== 'canceled'
+        );
+
+        // Ordenar las órdenes según el status
+        const sortedOrders = filteredOrders.sort((a, b) => {
+            const orderPriority = {
+                'in process': 1,
+                'pending': 2,
+                'ready': 3
+            };
+            return orderPriority[a.status] - orderPriority[b.status];
+        });
         if(response.data.length === 0){
             setOrderMesage('No se han encontrado pedidos')
         } else{
-            setOrders(response.data)
+            setOrders(sortedOrders)
             response = await axios.get(`${endpoint}/products`)
             setProducts(response.data)
         }

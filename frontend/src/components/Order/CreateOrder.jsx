@@ -3,13 +3,14 @@ import { axios } from '../../axiosConfig.js'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import ListTables from '../Table/ListTables'
+import Header from '../Header/Header.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
 const CreateProduct = () => {
   const [table, setTable] = useState(0)
   const [price, setPrice] = useState(0)
-  const [status] = useState('Pendiente')
+  const [status] = useState('pending')
   const [products, setProducts] = useState([])
   const [shownProducts, setShownProducts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -107,6 +108,7 @@ const CreateProduct = () => {
   }
 
   return (
+    <div> <Header/>
     <div className="flex flex-col h-screen">
       {/* Número de mesa arriba */}
       <div className="p-6 bg-gray-100">
@@ -224,6 +226,7 @@ const CreateProduct = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   )
 }

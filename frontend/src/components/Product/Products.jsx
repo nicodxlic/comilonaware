@@ -28,9 +28,13 @@ const Products = (role) => {
         if(role.role === 'admin'){
             if(response.data.length === 0){
                 setProductMesage('No se han encontrado productos')
+                Swal.close()
             } else {
                 setProducts(response.data)
-                setShownProducts(response.data) // Inicializar shownProducts
+                setShownProducts(response.data)
+                response = await axios.get(`${endpoint}/categories`)
+                setCategories(response.data)
+                Swal.close()
             }
         } else {
             let sortedOrders = response.data.filter(product => product.deleted !== 1)

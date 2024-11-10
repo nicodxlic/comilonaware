@@ -1,6 +1,7 @@
 import HomeCheff from './HomeCheff.jsx';
 import HomeWaiter from './HomeWaiter.jsx';
 import HomeAdmin from './HomeAdmin.jsx';
+import Header from '../Header/Header.jsx';
 
 import React, { /*useEffect,*/ useState } from 'react'
 
@@ -22,6 +23,7 @@ const Home = () => {
                 <option value="admin">Administrador</option>
             </select>
 
+            <Header/>
             {role === 'cheff' && <HomeCheff />}
             {role === 'waiter' && <HomeWaiter role={role}/>}
             {role === 'admin' && <HomeAdmin role={role}/>}

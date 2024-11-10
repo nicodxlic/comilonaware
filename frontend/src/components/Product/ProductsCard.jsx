@@ -39,6 +39,8 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
               <input id="swal-input2" class="swal2-input" type="number" placeholder="Precio" value="${product?.price || ''}">
               <label for="swal-input3" style="margin-top: 10px;">URL de la imagen:</label>
               <input id="swal-input3" class="swal2-input" type="text" placeholder="URL de la imagen" value="${product?.image || ''}">
+              <label for="swal-input4" style="margin-top: 10px;">URL de la imagen:</label>
+              <input id="swal-input4" class="swal2-input" type="text" placeholder="descripcion" value="${product?.description || ''}">
               <label for="swal-select" style="margin-top: 10px;">Categoría:</label>
               <select id="swal-select" class="swal2-input">
                   ${categories.map(category => `
@@ -56,13 +58,14 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
           const name = document.getElementById('swal-input1').value;
           const price = document.getElementById('swal-input2').value;
           const image = document.getElementById('swal-input3').value; // URL de la imagen
+          const description = document.getElementById('swal-input4').value;
           const category_id = document.getElementById('swal-select').value;
           // Validación de los campos
-          if (!name || !price || !image || !category_id) {
+          if (!name || !price || !image || !description || !category_id) {
               Swal.showValidationMessage('Todos los campos son obligatorios');
               return false; // Prevenir el cierre del modal si la validación falla
           }
-          return { name, price, image, category_id };
+          return { name, price, image, description, category_id };
       },
       didOpen: () => {
           // Añadir evento para cerrar con la "X"
@@ -79,6 +82,7 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
           name: formValues.name,
           price: formValues.price,
           image: formValues.image, // URL de la imagen
+          description: formValues.description,
           category_id: formValues.category_id, // Categoría seleccionada
       };
       Swal.fire({
@@ -94,6 +98,7 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
           name: updatedProduct.name, 
           price: updatedProduct.price, 
           image: updatedProduct.image, 
+          description: updatedProduct.description,
           category_id: updatedProduct.category_id,  // Actualiza la categoría
           deleted: updatedProduct.deleted, 
           enabled: updatedProduct.enabled

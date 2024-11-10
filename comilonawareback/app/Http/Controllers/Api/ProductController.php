@@ -36,6 +36,7 @@ class ProductController extends Controller
                 'name' => $request->input('name'),
                 'image' => $request->input('image'),
                 'price' => $request->input('price'),
+                'description' => $request->input('description'),
                 'deleted' => $request->input('deleted'),
                 'enabled' => $request->input('enabled'),
                 'category_id' => $category->id
@@ -75,6 +76,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->image = $request->image;
         $product->price = $request->price;
+        $product->description = $request->description;
         $product->deleted = $request->deleted;
         $product->enabled = $request->enabled;
         $product->save();
