@@ -8,7 +8,7 @@ const endpoint = 'http://localhost:8000/api'
 
 const CreatePurchase = () => {
     const [tables, setTables] = useState([])
-    const [selectedTable, setSelectedTable] = useState(null)
+    const [selectedTable, setSelectedTable] = useState('')
     const [orders, setOrders] = useState([])
     const [totalCost, setTotalCost] = useState(0)
     const [payMethod, setPayMethod] = useState('')
@@ -22,8 +22,20 @@ const CreatePurchase = () => {
 
     const store = async (e) => {
       e.preventDefault()
+      if(selectedTable === ''){
+        Swal.fire({
+          icon: 'error',
+          title: '¡Te falta un paso!',
+          text: 'para registrar un pago, debes seleccionar una mesa',
+        })
+      } else if(orders.length === 0) {
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'La mesa seleccionada no contiene ninguna orden que se deba pagar',
+        })
+      } else {
       setChangePay(clientPay-totalCost)
-      let cambio = clientPay-totalCost
       Swal.fire({
           title: 'Cargando...',
           text: 'Por favor espera',
@@ -35,7 +47,6 @@ const CreatePurchase = () => {
       e.preventDefault()
       await axios.get('/sanctum/csrf-cookie');
       let response = await axios.post(`${endpoint}/purchase`, {orders: orders, totalCost: totalCost, payMethod : 'cash', clientPay: clientPay, changePay: clientPay-totalCost})
-      console.log(response.data)
       for (let i = 0; i < orders.length; i++) {
         await axios.patch(`${endpoint}/order/${orders[i].id}`, {table : orders[i].table, price : orders[i].price, status: orders[i].status, purchase_id : response.data.id})
       }
@@ -43,9 +54,10 @@ const CreatePurchase = () => {
       Swal.fire({
           icon: 'success',
           title: '¡Éxito!',
-          text: 'Compra registrada correctamente El cambio es de: $' + clientPay-totalCost + '.',
+          text: 'Pago registradao correctamente, El cambio es de: $' + clientPay-totalCost + '.',
       })
       navigate('/')
+    }
   }
   
     const fetchTables = async () => {
@@ -56,6 +68,7 @@ const CreatePurchase = () => {
     const fetchOrdersByTable = async (tableId) => {
       if (!tableId) return
       const response = await axios.get(`${endpoint}/order/table/${tableId}`)
+      //antes de setear, controlar que las ordenes no contengan un purchaseId
       setOrders(response.data)
       calculateTotalCost(response.data)
     }

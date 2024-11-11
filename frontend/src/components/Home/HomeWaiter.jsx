@@ -21,7 +21,7 @@ const HomeWaiter = (role) => {
                 className="bg-green-500 text-white px-24 py-6 rounded-lg hover:bg-green-600"
                 onClick={() => setScreen('purchase')}
                 >
-                    Realizar compra
+                    Realizar pago
                 </button>
             </div>
         </div>
