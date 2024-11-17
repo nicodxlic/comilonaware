@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Purchase;
 
 class OrderController extends Controller
 {
@@ -32,6 +33,15 @@ class OrderController extends Controller
                 $order->products()->attach($product['id']);
             }
 
+            
+            $purchase = Purchase::create([
+                'order_id' => $order->id,
+                'totalCost' => $order->price,
+                'status' => 'Pendiente',
+            ]);
+
+            $order->purchase_id = $purchase->id;
+            $order->save();
             return 'Pedido creado exitosamente.';
         } else {
             return 'Error.';
