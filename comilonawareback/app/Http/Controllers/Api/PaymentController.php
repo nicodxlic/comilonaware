@@ -24,6 +24,7 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         if ($request) {
+            $purchaseId = $request->purchase_id;
             $payment = Payment::create([
                 'id' => $request->input('id'),
                 'purchase_id' => $request->input('purchase_id'),

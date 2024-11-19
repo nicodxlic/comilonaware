@@ -37,12 +37,14 @@ const CreatePayment = () => {
           title: 'Error',
           text: 'Indique el monto pagado por el cliente.',
         })
+        return
       } else if (paymentMethod === '') {
         Swal.fire({
           icon: 'error',
           title: 'Error',
           text: 'Seleccione un método de pago.',
         })
+        return
       }
       Swal.fire({
           title: 'Cargando...',
