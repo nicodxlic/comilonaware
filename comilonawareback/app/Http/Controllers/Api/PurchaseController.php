@@ -19,8 +19,15 @@ class PurchaseController extends Controller
     // Método para mostrar una compra en particular
     public function show($id)
     {
-        $purchase = Purchase::findOrFail($id);
-        return response()->json($purchase);
+        $purchase = Purchase::with('payments')->findOrFail($id);
+
+        $totalPaid = $purchase->payments->sum('amount');
+    
+        return response()->json([
+            'purchase' => $purchase,
+            'totalPaid' => $totalPaid,
+            'remaining' => $purchase->totalCost - $totalPaid,
+        ]);
     }
 
     // Método para crear una nueva compra
@@ -31,11 +38,7 @@ class PurchaseController extends Controller
             $purchase = Purchase::create([
                 'id' => $request->input('id'),
                 'totalCost' => $request->input('totalCost'),
-                'payMethod' => $request->input('payMethod'),
-                'clientPay' => $request->input('clientPay'),
-                'changePay' => $request->input('changePay'),
             ]);
-    
             return $purchase;
         } else {
             return 'No se pudo cargar la imagen.';
@@ -47,9 +50,6 @@ class PurchaseController extends Controller
     {
         $validatedData = $request->validate([
             'totalCost' => 'numeric',
-            'payMethod' => 'string',
-            'clientPay' => 'numeric',
-            'changePay' => 'numeric',
         ]);
 
         $purchase = Purchase::findOrFail($id);
@@ -65,7 +65,39 @@ class PurchaseController extends Controller
         $purchase->delete();
 
         return response()->json([
-            'message' => 'Purchase deleted successfully',
+            'message' => 'Compra eliminada exitosamente',
         ]);
     }
+
+public function showOrdersByPurchase(string $id)
+{
+    $purchase = Purchase::where('order_id', $id)->get();
+    return $purchase;
+
+}
+
+public function cancelPurchase($id)
+{
+    $purchase = Purchase::findOrFail($id);
+
+    if ($purchase->status === 'pagado') {
+        return response()->json([
+            'message' => 'No se puede cancelar un pedido pagado.',
+        ], 400);
+    }
+
+    $purchase->update(['status' => 'cancelado']);
+
+    return response()->json([
+        'message' => 'Pedido cancelado exitosamente.',
+        'purchase' => $purchase,
+    ]);
+}
+
+public function showPayments($id)
+{
+    $purchase = Purchase::with('payments')->findOrFail($id);
+    return response()->json($purchase->payments);
+}
+
 }

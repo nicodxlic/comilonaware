@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Order_ProductController;
 use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\MercadoPagoController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -43,6 +44,9 @@ Route::controller(PurchaseController::class)->group(function () {
     Route::put('/purchase/{id}', 'update');
     Route::post('/purchase', 'store');
     Route::delete('/purchase/{id}', 'destroy');
+    Route::get('purchase/{id}/orders', 'showOrdersByPurchase');
+    Route::patch('purchase/{id}/cancel', 'cancelPurchase');
+    Route::get('/purchase/{id}/payments', 'showPayments');
 });
 
 Route::controller(OrderController::class)->group(function () {
@@ -54,7 +58,6 @@ Route::controller(OrderController::class)->group(function () {
     Route::patch('/order/{id}', 'update');
     Route::put('/order/status/{id}', 'updateStatus');
     Route::delete('/order/delete/{id}', 'destroy');
-    //Route::get('/get-orders', 'getOrdersByTable');
 });
 
 Route::controller(TableController::class)->group(function () {
@@ -62,6 +65,11 @@ Route::controller(TableController::class)->group(function () {
     Route::put('/table/{id}', 'update');
     Route::post('/tables', 'store');
     Route::delete('/table/{id}', 'destroy');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('/payments', 'index');
+    Route::post('/payment/{id}', 'store');
 });
 
 Route::controller(MercadoPagoController::class)->group(function () {

@@ -18,15 +18,15 @@ class MercadoPagoController extends Controller
             "items" => [
                 [
                     "id" => 'DEP-001',
-                    "title" => 'Pedido mesa ' . $request->input('table'), 
+                    "title" => 'Pedido ' . $request->input('purchase_id'), 
                     "quantity" => 1,
                     "unit_price" => $request->input('unit_price'),
                 ]
             ],
             "back_urls" => [
-                "success" => route('payment.success'),
-                "failure" => route('payment.failure'),
-                "pending" => route('payment.pending')
+                "success" => 'localhost:3000',
+                "failure" => 'localhost:3000',
+                "pending" => 'localhost:3000',
             ],
             "auto_return" => "approved",
             "external_reference" => "ORD-1234" // Reference ID

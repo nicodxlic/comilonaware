@@ -11,14 +11,17 @@ class Purchase extends Model
 
     protected $table = 'purchases';
 
-    // Definir los campos que pueden ser asignados masivamente
     protected $fillable = [
         'totalCost',
-        'payMethod',
-        'clientPay',
-        'changePay',
+        'status',
+        'order_id',
     ];
+
     public function orders(){
         return $this->hasMany(Order::class);
+    }
+
+    public function payments(){
+        return $this->hasMany(Payment::class, 'purchase_id');
     }
 }

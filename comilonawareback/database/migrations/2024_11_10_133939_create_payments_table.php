@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->float('totalCost', 8, 2);
-            $table->enum('status', ['pendiente', 'pagado', 'cancelado'])->default('pendiente');
+            $table->foreignId('purchase_id')->constrained()->onDelete('cascade');
+            $table->string('paymentMethod');
+            $table->decimal('amount', 8, 2);
+            $table->decimal('change', 8, 2)->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('purchase');
+        Schema::dropIfExists('payments');
     }
 };
