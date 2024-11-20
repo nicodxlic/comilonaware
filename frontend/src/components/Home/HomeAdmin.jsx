@@ -36,7 +36,7 @@ const HomeAdmin = (role) => {
                 </button>
             </div>
             <br/>
-            <div className='mt-20'>
+            <div className='mt-8'>
             <Link to="/edit-table" className='btn btn-success mt-2 ml-2 text-white'>
                 Editar mesas disponibles
             </Link>
