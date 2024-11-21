@@ -34,7 +34,7 @@ class ProductSeeder extends Seeder
         Product::factory()->create([
             'name' => "Milanesa napolitana",
             'price' => 6700,
-            'image' => "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqIvY_EddgWVLKNZD3S-xTjijRkfogKFxFkA&s",
+            'image' => "https://animalgourmet.com/wp-content/uploads/2023/09/Milanesa-a-la-napolitana1.jpeg",
             'category_id' => 1,
             'description' => 
             'crujiente milanesa de carne o pollo cubierta con salsa de 

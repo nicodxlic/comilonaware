@@ -21,13 +21,44 @@ const CreateProduct = () => {
   const navigate = useNavigate()
 
   const addProductToOrder = (product) => {
-    setSelectedProducts([...selectedProducts, product])
+    const existingProduct = selectedProducts.find((p) => p.id === product.id)
+    if (existingProduct) {
+      setSelectedProducts(
+        selectedProducts.map((p) =>
+          p.id === product.id
+            ? { ...p, quantity: Math.min(p.quantity + 1, 20) } // Incrementar cantidad
+            : p
+        )
+      )
+    } else {
+      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }])
+    }
     setPrice(price + product.price)
   }
 
+  const updateQuantity = (productId, newQuantity) => {
+    if (newQuantity >= 1 && newQuantity <= 20) {
+      setSelectedProducts((prevProducts) => {
+        const updatedProducts = prevProducts.map((p) =>
+          p.id === productId ? { ...p, quantity: newQuantity } : p
+        );
+  
+        // Recalcular el precio total
+        const updatedPrice = updatedProducts.reduce(
+          (total, product) => total + product.price * product.quantity,
+          0
+        );
+  
+        setPrice(updatedPrice);
+        return updatedProducts;
+      });
+    }
+  };
+  
+
   const removeProductFromOrder = (product, index) => {
     setSelectedProducts(selectedProducts.filter((p, i) => i !== index))
-    setPrice(price - product.price)
+    setPrice(price - product.price * product.quantity)
   }
 
   const getAllProducts = async () => {
@@ -81,31 +112,53 @@ const CreateProduct = () => {
       setSelectedCategory(e.target.value) // Actualiza la categoría seleccionada
   }
 
-  const store = async (e) => {
-    Swal.fire({
-      title: 'Cargando...',
-      text: 'Por favor espera',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading()
-      }
-    })
-    e.preventDefault()
+
+/////////////////// controlar
+const store = async (e) => {
+  e.preventDefault()
+
+  if (table === 0) {
+    Swal.fire('Error', 'Por favor, selecciona una mesa válida.', 'error')
+    return
+  }
+
+  if (selectedProducts.length === 0) {
+    Swal.fire('Error', 'No hay productos seleccionados.', 'error')
+    return
+  }
+
+  Swal.fire({
+    title: 'Cargando...',
+    text: 'Por favor espera',
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading(),
+  })
+
+  try {
     await axios.get('/sanctum/csrf-cookie')
+
+    const tableExistsResponse = await axios.get(`${endpoint}/tables/${table}`)
+    if (!tableExistsResponse.data.exists) {
+      Swal.close()
+      Swal.fire('Error', 'La mesa seleccionada no existe.', 'error')
+      return
+    }
+
     await axios.post(`${endpoint}/order`, {
       table: table,
       price: price,
       status: status,
-      products: selectedProducts
+      products: selectedProducts.map(({ id, quantity }) => ({ id, quantity })),
     })
+
     Swal.close()
-    Swal.fire({
-      icon: 'success',
-      title: '¡Éxito!',
-      text: 'Pedido creado correctamente',
-    })
+    Swal.fire('¡Éxito!', 'Pedido creado correctamente', 'success')
     navigate('/')
+  } catch (error) {
+    Swal.close()
+    Swal.fire('Error', 'Ocurrió un error al guardar el pedido.', 'error')
   }
+}
 
   return (
     <div> <Header/>
@@ -198,12 +251,23 @@ const CreateProduct = () => {
                       <p className="font-semibold">{selectedProduct.name}</p>
                       <p className="text-gray-600">${selectedProduct.price}</p>
                     </div>
-                    <button
-                      className="bg-red-500 text-white px-4 py-2 rounded"
-                      onClick={() => removeProductFromOrder(selectedProduct, index)}
-                    >
-                      Eliminar
-                    </button>
+                    <div className="flex items-center">
+                      <p className="font-semibold mr-4 mt-4">Cantidad:</p>
+                      <input
+                        type="number"
+                        value={selectedProduct.quantity}
+                        onChange={(e) =>
+                          updateQuantity(selectedProduct.id, parseInt(e.target.value, 10))
+                        }
+                        className="w-16 p-2 border rounded mr-12"
+                      />
+                      <button
+                        className="bg-red-500 text-white px-4 py-2 rounded"
+                        onClick={() => removeProductFromOrder(selectedProduct, index)}
+                      >
+                        Eliminar
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (

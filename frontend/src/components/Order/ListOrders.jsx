@@ -61,16 +61,24 @@ const ListOrders = ({ role }) => {
     };
 
     const getOrderProducts = async (id) => {
-        const response = await axios.get(`${endpoint}/orders_products/` + id);
-        let productosHTML = '';
-        for (let i = 0; i < response.data.length; i++) {
-            for (let j = 0; j < products.length; j++) {
-                if (response.data[i].product_id === products[j].id) {
-                    productosHTML = productosHTML + products[j].name + '<br/>';
-                    break;
-                }
-            }
+        if (products.length === 0) {
+            // Esperar a que los productos se carguen
+            await getAllOrders();
         }
+
+        const response = await axios.get(`${endpoint}/orders_products/` + id);
+    
+        const productosHTML = response.data
+            .map(orderProduct => {
+                const product = products.find(p => p.id === orderProduct.product_id);
+                if (product) {
+                    return `${product.name} ${orderProduct.quantity === 1? '' : (`x${orderProduct.quantity}`)} `;
+                }
+                return null;
+            })
+            .filter(Boolean) // Elimina valores nulos
+            .join('<br/>');
+    
         Swal.fire({
             title: 'Productos en el pedido',
             html: productosHTML,
@@ -78,6 +86,8 @@ const ListOrders = ({ role }) => {
             confirmButtonText: 'Cerrar',
         });
     };
+    
+    
 
     const filteredOrders = orders.filter(order =>
       filterStatus === 'all' || order.status === filterStatus

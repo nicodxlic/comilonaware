@@ -23,6 +23,11 @@ class OrderController extends Controller
      */
     public function store(Request $request){
         if ($request) {
+            $request->validate([
+                'products.*.quantity' => 'required|integer|min:1|max:20',
+                'products.*.id' => 'required|exists:products,id',
+            ]);
+            
             $order = Order::create([
                 'table' => $request->input('table'),
                 'status' => $request->input('status'),
@@ -30,7 +35,9 @@ class OrderController extends Controller
             ]);
 
             foreach ($request->products as $product) {
-                $order->products()->attach($product['id']);
+                $order->products()->attach($product['id'], [
+                    'quantity' => $product['quantity']
+                ]);
             }
 
             
