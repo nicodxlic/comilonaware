@@ -1,34 +1,19 @@
-import HomeCheff from './HomeCheff.jsx';
-import HomeWaiter from './HomeWaiter.jsx';
-import HomeAdmin from './HomeAdmin.jsx';
-import Header from '../Header/Header.jsx';
-
-import React, { /*useEffect,*/ useState } from 'react'
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate();
 
-    const [role, setRole] = useState('cheff')
-
-    const handleRoleChange = (event) => {
-        setRole(event.target.value);
-    }
+    const handleLogin = () => {
+        navigate('/login');
+    };
 
     return (
         <div>
-            <h2>Rol</h2>
-            <select value={role} onChange={handleRoleChange}>
-                <option default value="cheff">Cheff</option>
-                <option value="waiter">Mozo</option>
-                <option value="admin">Administrador</option>
-            </select>
-
-            <Header/>
-            {role === 'cheff' && <HomeCheff />}
-            {role === 'waiter' && <HomeWaiter role={role}/>}
-            {role === 'admin' && <HomeAdmin role={role}/>}
+            <h1>Bienvenido a ComilonaWare</h1>
+            <button onClick={handleLogin}>Iniciar Sesión</button>
         </div>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

@@ -10,10 +10,30 @@ use App\Http\Controllers\Api\TableController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\PaymentController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\MercadoPagoController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
+});
+
+/*
+Route::middleware(['auth:sanctum'])->group(function () {
+    
+    Route::get('/roles-permissions', [UserController::class, 'listRolesAndPermissions']);
+    Route::post('/users/{id}/assign-role', [UserController::class, 'assignRole']);
+    Route::post('/users/{id}/remove-role', [UserController::class, 'removeRole']);
+    Route::post('/users/{id}/assign-permission', [UserController::class, 'assignPermission']);
+    Route::post('/users/{id}/remove-permission', [UserController::class, 'removePermission']);
+}); */
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/login', 'login');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index');
 });
 
 Route::controller(ProductController::class)->group(function () {
@@ -24,6 +44,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::put('/product/update/{id}', 'update');
     Route::put('/product/delete/{id}', 'destroy');
 });
+
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
@@ -71,6 +92,11 @@ Route::controller(PaymentController::class)->group(function () {
     Route::get('/payments', 'index');
     Route::post('/payment/{id}', 'store');
 });
+/*
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+Route::middleware(['auth', 'permission:show-orders'])->get('/orders', [OrderController::class, 'index']); */
 
 Route::controller(MercadoPagoController::class)->group(function () {
     Route::post('/create-preference', 'createPreference');

@@ -108,7 +108,7 @@ const ListOrders = ({ role }) => {
                         <th className="text-center">Total</th>
                         <th className="text-center">Estado</th>
                         <th className="text-center">Productos</th>
-                        {role.role.role === 'admin' && <th className="text-center">Acciones</th>}
+                        <th className="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody className="text-center">

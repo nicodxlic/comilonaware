@@ -6,12 +6,12 @@ import EditTable from '../Table/EditTables.jsx'
 
 import React, { /*useEffect,*/ useState } from 'react'
 
-const HomeAdmin = (role) => {
+const HomeAdmin = () => {
     const [screen, setScreen] = useState('orders')
     return(
         <div className="pb-44">
-            {screen === 'orders' && <ListOrders role={role}/>}
-            {screen === 'products' && <Products role={'admin'}/>}
+            {screen === 'orders' && <ListOrders/>}
+            {screen === 'products' && <Products/>}
             {screen === 'purchases' && <PurchaseList/>}
             {screen === 'tables' && <EditTable/>}
 
