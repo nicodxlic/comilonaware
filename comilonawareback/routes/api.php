@@ -18,28 +18,40 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*
-Route::middleware(['auth:sanctum'])->group(function () {
-    
-    Route::get('/roles-permissions', [UserController::class, 'listRolesAndPermissions']);
-    Route::post('/users/{id}/assign-role', [UserController::class, 'assignRole']);
-    Route::post('/users/{id}/remove-role', [UserController::class, 'removeRole']);
-    Route::post('/users/{id}/assign-permission', [UserController::class, 'assignPermission']);
-    Route::post('/users/{id}/remove-permission', [UserController::class, 'removePermission']);
-}); */
+/**
+ * Acceso para mozo y admin.
+ */
+Route::middleware(['role:Admin|Mozo'])->group(function () {
+
+    Route::get('/order', [OrderController::class, 'store']);
+    Route::get('/purchase', [PurchaseController::class, 'store']);
+
+});
+
+/**
+ * Acceso para admin
+ */
+Route::middleware(['role:Admin'])->group(function () {
+
+    Route::post('/product', [ProductController::class, 'store']);
+    Route::put('/table/{id}', [TableController::class, 'update']);
+    Route::delete('/table/{id}', [TableController::class, 'destroy']);
+});
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
 });
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index');
+    Route::post('/users/{id}/change-role', 'changeRole');
 });
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index');
     Route::patch('/product/disable/{id}', 'disable');
-    Route::post('/product', 'store');
+    //Route::post('/product', 'store');
     Route::get('/product/{id}', 'show');
     Route::put('/product/update/{id}', 'update');
     Route::put('/product/delete/{id}', 'destroy');
@@ -63,16 +75,17 @@ Route::controller(PurchaseController::class)->group(function () {
     Route::get('/purchases', 'index');
     Route::get('/purchase/{id}', 'show');
     Route::put('/purchase/{id}', 'update');
-    Route::post('/purchase', 'store');
+    //Route::post('/purchase', 'store');
     Route::delete('/purchase/{id}', 'destroy');
     Route::get('purchase/{id}/orders', 'showOrdersByPurchase');
     Route::patch('purchase/{id}/cancel', 'cancelPurchase');
     Route::get('/purchase/{id}/payments', 'showPayments');
 });
 
+
 Route::controller(OrderController::class)->group(function () {
     Route::get('/orders', 'index');
-    Route::post('/order', 'store');
+    //Route::post('/order', 'store');
     //Route::get('/order/{id}', 'show');
     Route::get('/order/purchase/{id}', 'showPurchaseOrders');
     Route::get('/order/table/{table}', 'showTableOrders');
@@ -83,20 +96,16 @@ Route::controller(OrderController::class)->group(function () {
 
 Route::controller(TableController::class)->group(function () {
     Route::get('/tables', 'index');
-    Route::put('/table/{id}', 'update');
+    //Route::put('/table/{id}', 'update');
     Route::post('/tables', 'store');
-    Route::delete('/table/{id}', 'destroy');
+    //Route::delete('/table/{id}', 'destroy');
 });
 
 Route::controller(PaymentController::class)->group(function () {
     Route::get('/payments', 'index');
     Route::post('/payment/{id}', 'store');
 });
-/*
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
-});
-Route::middleware(['auth', 'permission:show-orders'])->get('/orders', [OrderController::class, 'index']); */
+
 
 Route::controller(MercadoPagoController::class)->group(function () {
     Route::post('/create-preference', 'createPreference');
@@ -110,3 +119,26 @@ Route::get('/payment/failure', function () {
 Route::get('/payment/pending', function () {
     return "El pago está pendiente";
 })->name('payment.pending');
+
+//Route::get('/roles-permissions', [UserController::class, 'listRolesAndPermissions']); Incluir en alguna ruta de userController
+
+/**
+ * Acceso para los tres roles.
+ */
+
+/*
+Route::middleware(['role:Admin|Mozo|Chef'])->group(function () {
+
+    
+    Route::get('/roles-permissions', [UserController::class, 'listRolesAndPermissions']);
+    Route::post('/users/{id}/assign-role', [UserController::class, 'assignRole']);
+    Route::post('/users/{id}/remove-role', [UserController::class, 'removeRole']);
+    Route::post('/users/{id}/assign-permission', [UserController::class, 'assignPermission']);
+    Route::post('/users/{id}/remove-permission', [UserController::class, 'removePermission']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    
+    Route::get('/orders', [OrderController::class, 'index']);
+    
+}); */

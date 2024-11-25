@@ -12,7 +12,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles', 'permissions')->get();
+        $users = User::with('roles')->get();
         return response()->json($users);
     }
 
@@ -52,15 +52,10 @@ class UserController extends Controller
     /**
      * Listado de roles y permisos disponibles.
      */
-    public function listRolesAndPermissions()
+    public function listRoles()
     {
         $roles = Role::all();
-        $permissions = Permission::all();
-
-        return response()->json([
-            'roles' => $roles,
-            'permissions' => $permissions
-        ]);
+        return $roles;
     }
 
     /**
@@ -93,37 +88,19 @@ class UserController extends Controller
         return response()->json(['message' => 'Rol revocado correctamente.']);
     }
 
-    /**
-     * Darle rol a un usuario
-     */
-
-     public function assignPermission(Request $request, $userId)
+    public function changeRole(Request $request, $id)
     {
-        $request->validate([
-            'permission' => 'required|string|exists:permissions,name',
-        ]);
 
-        $user = User::findOrFail($userId);
-        $user->givePermissionTo($request->input('permission'));
+        $user = User::findOrFail($id);
+        $newRole = $request->input('role');
 
-        return response()->json(['message' => 'Permiso asignado correctamente.']);
+        // Eliminar todos los roles actuales del usuario
+        $user->syncRoles([]);
+        $user->assignRole($newRole);
+
+        return response()->json([
+            'message' => 'Rol cambiado con éxito',
+            'user' => $user->load('roles') // Devuelve el usuario con sus roles actualizados
+        ], 200);
     }
-
-    /**
-     * Eliminar permisos de un usuario. Revisar.
-     */
-
-    public function removePermission(Request $request, $userId)
-    {
-        $request->validate([
-        'permission' => 'required|string|exists:permissions,name',
-        ]);
-    
-        $user = User::findOrFail($userId);
-        $user->revokePermissionTo($request->input('permission'));
-    
-        return response()->json(['message' => 'Permiso revocado correctamente.']);
-    }
-
-
 }
