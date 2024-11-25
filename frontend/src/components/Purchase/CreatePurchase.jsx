@@ -3,6 +3,7 @@ import { axios } from '../../axiosConfig';
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+import FooterWaiter from '../Footer/FooterWaiter';
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -156,6 +157,7 @@ const CreatePurchase = () => {
       <div className='mt-10'>
         {preferenceId && <Wallet initialization={{ preferenceId }} />}
       </div>
+      <FooterWaiter/>
     </div>
     );
   };

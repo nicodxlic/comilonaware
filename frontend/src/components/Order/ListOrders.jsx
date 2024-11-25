@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { axios } from '../../axiosConfig.js';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import FooterWaiter from '../Footer/FooterWaiter.jsx';
+import FooterAdmin from '../Footer/FooterAdmin.jsx';
+import Header from '../Header/Header.jsx';
 
 const endpoint = 'http://localhost:8000/api';
 
-const ListOrders = ({ role }) => {
+const ListOrders = () => {
+    const role = localStorage.getItem('role')
     const [orders, setOrders] = useState([]);
     const [products, setProducts] = useState([]);
     const [filterStatus, setFilterStatus] = useState('all');
@@ -109,7 +113,7 @@ const ListOrders = ({ role }) => {
 
     return (
         <div>
-            
+            <Header/>
             <table className="table table-striped w-full">
                 <thead className="bg-primary text-white text-center">
                     <tr>
@@ -118,7 +122,12 @@ const ListOrders = ({ role }) => {
                         <th className="text-center">Total</th>
                         <th className="text-center">Estado</th>
                         <th className="text-center">Productos</th>
-                        <th className="text-center">Acciones</th>
+                        {role === 'Admin' ? (
+                                <th className="text-center">Acciones</th>
+                            ) : (
+                                ''
+                        )}
+                        
                     </tr>
                 </thead>
                 <tbody className="text-center">
@@ -138,7 +147,7 @@ const ListOrders = ({ role }) => {
                                     <option value="ready">Listo para entregar</option>
                                     <option value="delivered">Entregado</option>
                                     <option value="canceled">Cancelado</option>
-                                    {role.role.role === 'admin' && (
+                                    {role === 'Admin' && (
                                         <option value="deleted">Eliminado</option>
                                     )}
                                 </select>
@@ -151,7 +160,7 @@ const ListOrders = ({ role }) => {
                                     Ver productos
                                 </button>
                             </td>
-                            {role.role.role === 'admin' && (
+                            {role === 'Admin' && (
                                 <td>
                                     <button
                                         className="bg-red-500 text-white px-4 py-2 rounded-lg"
@@ -203,6 +212,12 @@ const ListOrders = ({ role }) => {
                         <option value="deleted">Eliminado</option>
                     </select>
                 </div>
+                {role === 'Admin' ? (
+                    <FooterAdmin/>
+                ) : (
+                    <FooterWaiter/>
+                )}
+                
             </div>
 
             <Link to="/create-order" className="btn btn-success mt-4 text-white">

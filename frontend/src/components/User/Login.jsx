@@ -17,13 +17,15 @@ const Login = ({ setAuthenticated }) => {
             });
             console.log('Respuesta recibida:', response.data);
             const role = response.data.role
+            localStorage.setItem('user', JSON.stringify({email: email, password: password}))
+            localStorage.setItem('role', role)
 
             if (role === 'Admin') {
-                navigate('/home-admin')
+                navigate('/orders')
             } else if (role === 'Chef') { 
-                navigate('/home-chef')
+                navigate('/kitchen')
             } else if (role === 'Mozo') {
-                navigate('/home-waiter')
+                navigate('/orders')
             }
 
         } catch (error) {

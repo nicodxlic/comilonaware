@@ -136,14 +136,6 @@ const store = async (e) => {
 
   try {
     await axios.get('/sanctum/csrf-cookie')
-
-    const tableExistsResponse = await axios.get(`${endpoint}/tables/${table}`)
-    if (!tableExistsResponse.data.exists) {
-      Swal.close()
-      Swal.fire('Error', 'La mesa seleccionada no existe.', 'error')
-      return
-    }
-
     await axios.post(`${endpoint}/order`, {
       table: table,
       price: price,
@@ -153,7 +145,7 @@ const store = async (e) => {
 
     Swal.close()
     Swal.fire('¡Éxito!', 'Pedido creado correctamente', 'success')
-    navigate('/')
+    navigate('/orders')
   } catch (error) {
     Swal.close()
     Swal.fire('Error', 'Ocurrió un error al guardar el pedido.', 'error')

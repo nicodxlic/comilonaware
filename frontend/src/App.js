@@ -7,11 +7,11 @@ import EditTables from './components/Table/EditTables';
 import CreatePurchase from './components/Purchase/CreatePurchase';
 import CreatePayment from './components/Payment/CreatePayment';
 import Menu from './components/Menu/Menu.jsx';
-import HomeAdmin from './components/Home/HomeAdmin';
-import HomeCheff from './components/Home/HomeCheff';
-import HomeWaiter from './components/Home/HomeWaiter';
 import Login from './components/User/Login';
-
+import ListOrders from './components/Order/ListOrders.jsx';
+import Kitchen from './components/Kitchen/Kitchen.jsx';
+import Products from './components/Product/Products.jsx';
+import PurchaseList from './components/Purchase/PurchaseList.jsx';
 
 function App() {
   return (
@@ -20,9 +20,11 @@ function App() {
       <Routes>
         <Route path='/' element={ <Home/> }/>
         <Route path='/login' element={ <Login/>} />
-        <Route path='/home-admin' element={ <HomeAdmin/> }/>
-        <Route path='/home-waiter' element={ <HomeWaiter/> }/>
-        <Route path='/home-chef' element={ <HomeCheff/> }/>
+        <Route path='/orders' element={ <ListOrders/> }/>
+        <Route path='/purchase' element={ <ListOrders/> }/>
+        <Route path='/kitchen' element={ <Kitchen/> }/>
+        <Route path='/products' element={ <Products/> }/>
+        <Route path='/purchases' element={ <PurchaseList/> }/>
         <Route path='/create-product' element={ <CreateProduct/>} />
         <Route path='/create-order' element={ <CreateOrder/>} />
         <Route path='/edit-table' element={ <EditTables/>} />

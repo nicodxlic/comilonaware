@@ -3,10 +3,14 @@ import {axios} from '../../axiosConfig.js'
 import {Link} from 'react-router-dom'
 import ProductsCard from './ProductsCard.jsx'
 import Swal from "sweetalert2"
+import Header from '../Header/Header.jsx'
+import FooterAdmin from '../Footer/FooterAdmin.jsx'
+import FooterChef from '../Footer/FooterChef.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
-const Products = (role) => {
+const Products = () => {
+    const role = localStorage.getItem('role')
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
     const [shownProducts, setShownProducts] = useState([])
@@ -25,7 +29,7 @@ const Products = (role) => {
           })
         let response = await axios.get(`${endpoint}/products`)
         
-        if(role.role === 'admin'){
+        if(role === 'Admin'){
             if(response.data.length === 0){
                 setProductMesage('No se han encontrado productos')
                 Swal.close()
@@ -71,6 +75,7 @@ const Products = (role) => {
     }
 
     return (
+        <div> <Header/>
         <div className="container mx-auto p-4">
             <h3 className="text-2xl font-bold mb-4">Productos</h3>
             <div className='flex justify-center mt-6 mb-6'>
@@ -117,7 +122,12 @@ const Products = (role) => {
                     <p className="text-center col-span-full">{productMesage}</p>
                 )}
             </div>
-        </div>
+            {role === 'Admin' ? (
+                    <FooterAdmin/>
+                ) : (
+                    <FooterChef/>
+                )}
+        </div></div>
     )
 }
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Header from '../Header/Header'
+import FooterChef from '../Footer/FooterChef'
 
 import OrdersCard from '../Order/OrdersCard'
 
@@ -65,8 +67,9 @@ const Kitchen = () => {
 
     return (
         <div>
+            <Header/>
             <h3 className="text-2xl text-center font-bold mb-4">Pedidos</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="ml-8 mr-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {orders.length > 0 ? (
                     orders.map(order => (
                         <OrdersCard 
@@ -78,6 +81,7 @@ const Kitchen = () => {
                     <p className="text-center col-span-full">{orderMesage}</p>
                 )}
             </div>
+            <FooterChef/>
         </div>
     )
 }

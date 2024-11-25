@@ -62,7 +62,7 @@ const CreateProduct = () => {
             title: '¡Éxito!',
             text: 'Producto creado correctamente',
         })
-        navigate('/')
+        navigate('/products')
     }
     return (
     <div> <Header/>
@@ -70,7 +70,7 @@ const CreateProduct = () => {
         <div className="w-full flex justify-start mb-6">
             <button
                 className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/products')}
             >
                 Atrás
             </button>

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { axios } from '../../axiosConfig.js'
 import Swal from "sweetalert2"
 import { useNavigate } from 'react-router-dom'
+import Header from '../Header/Header.jsx'
+import FooterAdmin from '../Footer/FooterAdmin.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -133,6 +135,7 @@ const PurchaseList = () => {
 
     return(
         <div>
+            <Header/>
             <table className='table table-striped table-auto w-full text-center'>
                 <thead className='bg-primary text-white text-center'>
                     <tr>
@@ -180,6 +183,7 @@ const PurchaseList = () => {
                     ))}
                 </tbody>
             </table>
+            <FooterAdmin/>
         </div>
     )
 }

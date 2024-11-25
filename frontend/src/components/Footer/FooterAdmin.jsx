@@ -1,31 +1,33 @@
-import CreatePurchase from '../Purchase/CreatePurchase'
-import ListOrders from '../Order/ListOrders'
-
 import React, { /*useEffect,*/ useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const HomeWaiter = (role) => {
-    const [screen, setScreen] = useState('orders')
+const FooterAdmin = () => {
+    const navigate = useNavigate()
     return(
         <div className="pb-44">
-            {screen === 'orders' && <ListOrders role={role}/>}
-            {screen === 'purchase' && <CreatePurchase/>}
 
             <div className="fixed inset-x-0 bottom-0 bg-gray-800 p-10 flex justify-center space-x-24">
                 <button 
                 className="bg-blue-500 text-white px-24 py-6 rounded-lg hover:bg-blue-600"
-                onClick={() => setScreen('orders')}
+                onClick={() => navigate('/orders')}
                 >
                     Pedidos
                 </button>
                 <button 
                 className="bg-green-500 text-white px-24 py-6 rounded-lg hover:bg-green-600"
-                onClick={() => setScreen('purchase')}
+                onClick={() => navigate('/products')}
                 >
-                    Realizar pago
+                    Productos
+                </button>
+                <button 
+                className="bg-yellow-500 text-white px-24 py-6 rounded-lg hover:bg-yellow-600"
+                onClick={() => navigate('/purchases')}
+                >
+                    Compras
                 </button>
             </div>
         </div>
     )
 }
 
-export default HomeWaiter
+export default FooterAdmin
