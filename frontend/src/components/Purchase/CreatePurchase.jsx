@@ -57,7 +57,7 @@ const CreatePurchase = () => {
           title: '¡Éxito!',
           text: 'Pago registradao correctamente, El cambio es de: $' + clientPay-totalCost + '.',
       })
-      navigate('/')
+      navigate('/orders')
     }
   }
   
