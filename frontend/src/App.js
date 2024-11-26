@@ -14,6 +14,7 @@ import Products from './components/Product/Products.jsx';
 import PurchaseList from './components/Purchase/PurchaseList.jsx';
 import ListUsers from './components/Users/ListUsers.jsx'
 import CreateUser from './components/Users/CreateUser.jsx';
+import Profile from './components/Users/Profile.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/login' element={ <Login/>} />
         <Route path='/users' element={ <ListUsers/>} />
         <Route path='/create-user' element={ <CreateUser/>} />
+        <Route path='/profile' element={ <Profile/>} />
         <Route path='/orders' element={ <ListOrders/> }/>
         <Route path='/purchase' element={ <ListOrders/> }/>
         <Route path='/kitchen' element={ <Kitchen/> }/>

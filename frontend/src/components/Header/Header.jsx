@@ -17,7 +17,6 @@ const Header = () => {
       }
       localStorage.removeItem('user');
       localStorage.removeItem('role');
-      alert('Sesión cerrada exitosamente');
       navigate('/');
     } catch (error) {
       console.error('Error al cerrar sesión:', error.response?.data || error.message);
@@ -27,18 +26,22 @@ const Header = () => {
 
   return (
     <header className="bg-primary flex justify-center items-center py-4">
+      <button
+        onClick={() => navigate('/profile')}
+        className="bg-transparent text-white px-4 py-2 mr-96 text-2xl">
+        Editar perfil
+      </button>
       <img
         src={comilonawarelogo}
         alt="Comilonaware Logo"
         className="h-16 cursor-pointer"
         onClick={() => navigate('/')}
       />
-
-        <button
-          onClick={handleLogout}
-          className="bg-transparent text-white px-4 py-2 ml-96 text-2xl">
-          Cerrar sesión
-        </button>
+      <button
+        onClick={handleLogout}
+        className="bg-transparent text-white px-4 py-2 ml-96 text-2xl">
+        Cerrar sesión
+      </button>
       
     </header>
   );
