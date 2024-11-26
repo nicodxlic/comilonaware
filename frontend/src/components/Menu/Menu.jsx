@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {axios} from '../../axiosConfig.js'
 import Swal from 'sweetalert2'
-import Header from '../Header/Header.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -49,7 +48,7 @@ const Menu = () => {
     }
 
     return (
-        <div> <Header/>
+        <div>
         <div className="container mx-auto px-4 py-8 rounded-lg">
             <div className="mb-6">
                 <label htmlFor="categoryFilter" className="font-semibold mr-2">Filtrar por categoría:</label>

@@ -10,6 +10,14 @@ const Login = ({ setAuthenticated }) => {
 
     const handleLogin = async (e) => {
         e.preventDefault()
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
         try {
             await axios.get('/sanctum/csrf-cookie');
             const response = await axios.post('http://localhost:8000/api/login', {
@@ -21,7 +29,7 @@ const Login = ({ setAuthenticated }) => {
             localStorage.setItem('user', JSON.stringify({email: email, password: password}))
             localStorage.setItem('id', response.data.user.id)
             localStorage.setItem('role', role)
-
+            Swal.close()
             if (role === 'Admin') {
                 navigate('/orders')
             } else if (role === 'Chef') { 
