@@ -7,13 +7,22 @@ import Header from '../Header/Header.jsx'
 const endpoint = 'http://localhost:8000/api/product'
 
 const CreateProduct = () => {
+    const navigate = useNavigate()
+    const role = localStorage.getItem('role')
+    if(role !== 'Admin' && role !== 'Chef'){
+        Swal.fire({
+            icon: 'error',
+            title: '¡No tienes los permisos!',
+            text: 'debes tener el rol correspondiente a esta pantalla',
+          })
+        navigate('/')
+    }
     const [name, setName] = useState('')
     const [categories, setCategories] = useState([])
     const [price, setPrice] = useState(1)
     const [description, setDescription] = useState([])
     const [image, setImage] = useState('')
     const [productCategory, setProductCategory] = useState([])
-    const navigate = useNavigate()
 
     const getAllCategories = async () => {
         Swal.fire({
@@ -37,32 +46,52 @@ const CreateProduct = () => {
         e.preventDefault()
         setProductCategory(e.target.value)
     }
+
     const store = async (e) => {
-        Swal.fire({
-            title: 'Cargando...',
-            text: 'Por favor espera',
-            allowOutsideClick: false, // Evita que el usuario cierre el loader clickeando fuera del modal
-            didOpen: () => {
-              Swal.showLoading(); // Activa el spinner
+        if(name === '' || 
+        price === '' || 
+        image === '' ||
+        description === '' || 
+        isNaN(productCategory))
+        {
+            Swal.fire({
+                icon: 'error',
+                title: '¡No completaste todos los campos!',
+                text: 'para registrar un producto, debes completar todos los campos',
+              })
+        } else{
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espera',
+                allowOutsideClick: false, // Evita que el usuario cierre el loader clickeando fuera del modal
+                didOpen: () => {
+                  Swal.showLoading(); // Activa el spinner
+                }
+            })
+            e.preventDefault()
+            try{
+                await axios.get('/sanctum/csrf-cookie');
+                await axios.post(endpoint, {name: name,
+                    price: price,
+                    image: image,
+                    description: description,
+                    deleted: false,
+                    enabled: true,
+                    category_id: productCategory
+                })
+                Swal.close()
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: 'Producto creado correctamente',
+                })
+                navigate('/products')
+            } catch(error){
+                Swal.close()
+                Swal.fire('Error', 
+                'Ocurrió un error al guardar el pedido.', 'error')
             }
-        })
-        e.preventDefault()
-        await axios.get('/sanctum/csrf-cookie');
-        await axios.post(endpoint, {name: name,
-            price: price,
-            image: image,
-            description: description,
-            deleted: false,
-            enabled: true,
-            category_id: productCategory
-        })
-        Swal.close()
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: 'Producto creado correctamente',
-        })
-        navigate('/products')
+        }
     }
     return (
     <div> <Header/>

@@ -2,17 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { axios } from '../../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Header from '../Header/Header.jsx';
+import FooterAdmin from '../Footer/FooterAdmin.jsx';
 
 const endpoint = 'http://localhost:8000/api/';
 
 const EditTable = () => {
+  const navigate = useNavigate()
+  const role = localStorage.getItem('role')
+  if(role !== 'Admin'){
+      Swal.fire({
+          icon: 'error',
+          title: '¡No tienes los permisos!',
+          text: 'debes tener el rol correspondiente a esta pantalla',
+        })
+      navigate('/')
+  }
   const [tables, setTables] = useState([]);
   const [selectedTables, setSelectedTables] = useState([]);
-  const navigate = useNavigate();
 
   const getTables = async () => {
+    Swal.fire({
+      title: 'Cargando...',
+      text: 'Por favor espera',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    })
     const response = await axios.get(`${endpoint}tables`);
     setTables(response.data);
+    Swal.close()
   };
 
   useEffect(() => {
@@ -115,6 +135,7 @@ const EditTable = () => {
 }
 
   return (
+    <div> <Header/>
     <div className="p-6">
       <h3 className="text-xl font-bold mb-4">Editar mesas</h3>
       <ul className="space-y-4 grid grid-cols-4 gap-2">
@@ -154,6 +175,7 @@ const EditTable = () => {
                     Eliminar una mesa
                 </button>
             </div>
+    </div> <FooterAdmin/>
     </div>
   );
 };

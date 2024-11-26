@@ -7,6 +7,16 @@ import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 const endpoint = 'http://localhost:8000/api'
 
 const CreatePayment = () => {
+  const navigate = useNavigate()
+  const role = localStorage.getItem('role')
+  if(role !== 'Admin' && role !== 'Mozo'){
+      Swal.fire({
+          icon: 'error',
+          title: '¡No tienes los permisos!',
+          text: 'debes tener el rol correspondiente a esta pantalla',
+        })
+      navigate('/')
+  }
     const [totalPaid, setTotalPaid] = useState(0);
     const [remaining, setRemaining] = useState(0);
     const [purchase, setPurchase] = useState([])
@@ -19,7 +29,6 @@ const CreatePayment = () => {
     const [preferenceId, setPreferenceId] = useState(null)
 
     initMercadoPago('TEST-08637446-f73c-43b3-a3e2-c02b3a8ccc84', {locale: 'es-AR'});
-    const navigate = useNavigate()
 
     const store = async (e) => {
       var alertText = 'Pago registrado exitosamente.'

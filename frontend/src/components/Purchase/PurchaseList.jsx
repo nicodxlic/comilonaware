@@ -4,18 +4,40 @@ import Swal from "sweetalert2"
 import { useNavigate } from 'react-router-dom'
 import Header from '../Header/Header.jsx'
 import FooterAdmin from '../Footer/FooterAdmin.jsx'
+import FooterWaiter from '../Footer/FooterWaiter.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
 const PurchaseList = () => {
-    const [purchases, setPurchases] = useState([])
     const navigate = useNavigate()
+    const role = localStorage.getItem('role')
+    if(role !== 'Admin' && role !== 'Mozo'){
+        Swal.fire({
+            icon: 'error',
+            title: '¡No tienes los permisos!',
+            text: 'debes tener el rol correspondiente a esta pantalla',
+          })
+        navigate('/')
+    }
+    const [purchases, setPurchases] = useState([])
 
     const getAllPurchases = async () => {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
         try {
             const response = await axios.get(`${endpoint}/purchases`)
             setPurchases(response.data)
+            Swal.close()
         } catch (error) {
+            Swal.close()
+            Swal.fire('Error', 
+            'Ocurrió un error al guardar el pedido.', 'error')
             console.error('Error al obtener las compras:', error)
         }
     }
@@ -136,15 +158,15 @@ const PurchaseList = () => {
     return(
         <div>
             <Header/>
-            <table className='table table-striped table-auto w-full text-center'>
+            <table className='table table-striped w-full'>
                 <thead className='bg-primary text-white text-center'>
                     <tr>
-                        <th>ID</th>
-                        <th>Precio total</th>
-                        <th>Pedidos</th>
-                        <th>Estado</th>
-                        <th>Pagos</th>
-                        <th>Acciones</th>
+                        <th className='text-center'>ID</th>
+                        <th className='text-center'>Precio total</th>
+                        <th className='text-center'>Pedidos</th>
+                        <th className='text-center'>Estado</th>
+                        <th className='text-center'>Pagos</th>
+                        <th className='text-center'>Acciones</th>
                     </tr>
                 </thead>
                 <tbody className='text-center items-center'>
@@ -183,7 +205,11 @@ const PurchaseList = () => {
                     ))}
                 </tbody>
             </table>
-            <FooterAdmin/>
+            {role === 'Admin' ? (
+                    <FooterAdmin/>
+                ) : (
+                    <FooterWaiter/>
+                )}
         </div>
     )
 }

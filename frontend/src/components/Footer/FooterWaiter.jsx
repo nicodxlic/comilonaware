@@ -14,10 +14,16 @@ const FooterWaiter = () => {
                     Pedidos
                 </button>
                 <button 
-                className="bg-green-500 text-white px-24 py-6 rounded-lg hover:bg-green-600"
+                className="bg-purple-500 text-white px-24 py-6 rounded-lg hover:bg-purple-600"
                 onClick={() => navigate('/create-purchase')}
                 >
                     Realizar pago
+                </button>
+                <button 
+                className="bg-yellow-500 text-white px-24 py-6 rounded-lg hover:bg-yellow-600"
+                onClick={() => navigate('/purchases')}
+                >
+                    Lista de pagos
                 </button>
             </div>
         </div>

@@ -7,7 +7,17 @@ import Header from '../Header/Header.jsx'
 
 const endpoint = 'http://localhost:8000/api'
 
-const CreateProduct = () => {
+const CreateOrder = () => {
+  const navigate = useNavigate()
+  const role = localStorage.getItem('role')
+  if(role !== 'Admin' && role !== 'Mozo'){
+      Swal.fire({
+          icon: 'error',
+          title: '¡No tienes los permisos!',
+          text: 'debes tener el rol correspondiente a esta pantalla',
+        })
+      navigate('/')
+  }
   const [table, setTable] = useState(0)
   const [price, setPrice] = useState(0)
   const [status] = useState('pending')
@@ -18,7 +28,6 @@ const CreateProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState('')
   const [message, setMessage] = useState('Cargando...')
   const [selectedProducts, setSelectedProducts] = useState([])
-  const navigate = useNavigate()
 
   const addProductToOrder = (product) => {
     const existingProduct = selectedProducts.find((p) => p.id === product.id)
@@ -287,4 +296,4 @@ const store = async (e) => {
   )
 }
 
-export default CreateProduct
+export default CreateOrder

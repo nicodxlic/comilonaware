@@ -5,26 +5,45 @@ import Swal from 'sweetalert2';
 import FooterWaiter from '../Footer/FooterWaiter.jsx';
 import FooterAdmin from '../Footer/FooterAdmin.jsx';
 import Header from '../Header/Header.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const endpoint = 'http://localhost:8000/api';
 
 const ListOrders = () => {
+    const navigate = useNavigate()
     const role = localStorage.getItem('role')
+    if(role !== 'Admin' && role !== 'Mozo'){
+        Swal.fire({
+            icon: 'error',
+            title: '¡No tienes los permisos!',
+            text: 'debes tener el rol correspondiente a esta pantalla',
+          })
+        navigate('/')
+    }
     const [orders, setOrders] = useState([]);
     const [products, setProducts] = useState([]);
     const [filterStatus, setFilterStatus] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 5;
 
     useEffect(() => {
         getAllOrders();
     }, []);
 
     const getAllOrders = async () => {
+        Swal.fire({
+            title: 'Cargando...',
+            text: 'Por favor espera',
+            allowOutsideClick: false,
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
         const response = await axios.get(`${endpoint}/orders`);
         setOrders(response.data.reverse()); // Últimos pedidos primero
         const productsResponse = await axios.get(`${endpoint}/products`);
         setProducts(productsResponse.data);
+        Swal.close()
     };
 
     const handleStatusChange = async (e, id) => {
@@ -114,7 +133,7 @@ const ListOrders = () => {
     return (
         <div>
             <Header/>
-            <table className="table table-striped w-full">
+            <table className="table table-striped w-full mb-2">
                 <thead className="bg-primary text-white text-center">
                     <tr>
                         <th className="text-center">N° de pedido</th>
@@ -174,7 +193,7 @@ const ListOrders = () => {
                     ))}
                 </tbody>
             </table>
-            <div className="flex justify-between items-center mt-4 ml-24">
+            <div className="flex justify-between items-center ml-24">
                 {/* Paginado */}
                 <div className="text-gray-700">
                     Página {currentPage} de {totalPages}
@@ -220,7 +239,7 @@ const ListOrders = () => {
                 
             </div>
 
-            <Link to="/create-order" className="btn btn-success mt-4 text-white">
+            <Link to="/create-order" className="btn btn-success text-white mb-24">
                 Agregar nuevo pedido
             </Link>
         </div>

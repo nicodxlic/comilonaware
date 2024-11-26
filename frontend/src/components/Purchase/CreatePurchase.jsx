@@ -4,10 +4,21 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import FooterWaiter from '../Footer/FooterWaiter';
+import FooterAdmin from '../Footer/FooterAdmin';
 
 const endpoint = 'http://localhost:8000/api'
 
 const CreatePurchase = () => {
+  const navigate = useNavigate()
+  const role = localStorage.getItem('role')
+  if(role !== 'Admin' && role !== 'Mozo'){
+      Swal.fire({
+          icon: 'error',
+          title: '¡No tienes los permisos!',
+          text: 'debes tener el rol correspondiente a esta pantalla',
+        })
+      navigate('/')
+  }
     const [tables, setTables] = useState([])
     const [selectedTable, setSelectedTable] = useState('')
     const [orders, setOrders] = useState([])
@@ -18,8 +29,6 @@ const CreatePurchase = () => {
     const [preferenceId, setPreferenceId] = useState(null)
 
     initMercadoPago('TEST-08637446-f73c-43b3-a3e2-c02b3a8ccc84', {locale: 'es-AR'});
-    
-    const navigate = useNavigate()
 
     const store = async (e) => {
       e.preventDefault()
@@ -46,18 +55,24 @@ const CreatePurchase = () => {
           }
         })
       e.preventDefault()
-      await axios.get('/sanctum/csrf-cookie');
-      let response = await axios.post(`${endpoint}/purchase`, {orders: orders, totalCost: totalCost, payMethod : 'cash', clientPay: clientPay, changePay: clientPay-totalCost})
-      for (let i = 0; i < orders.length; i++) {
-        await axios.patch(`${endpoint}/order/${orders[i].id}`, {table : orders[i].table, price : orders[i].price, status: orders[i].status, purchase_id : response.data.id})
+      try{
+        await axios.get('/sanctum/csrf-cookie');
+        let response = await axios.post(`${endpoint}/purchase`, {orders: orders, totalCost: totalCost, payMethod : 'cash', clientPay: clientPay, changePay: clientPay-totalCost})
+        for (let i = 0; i < orders.length; i++) {
+          await axios.patch(`${endpoint}/order/${orders[i].id}`, {table : orders[i].table, price : orders[i].price, status: orders[i].status, purchase_id : response.data.id})
+        }
+        Swal.close()
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: 'Pago registradao correctamente, El cambio es de: $' + clientPay-totalCost + '.',
+        })
+        navigate('/orders')
+      } catch(error){
+        Swal.close()
+        Swal.fire('Error', 
+        'Ocurrió un error al guardar el pedido.', 'error')
       }
-      Swal.close()
-      Swal.fire({
-          icon: 'success',
-          title: '¡Éxito!',
-          text: 'Pago registradao correctamente, El cambio es de: $' + clientPay-totalCost + '.',
-      })
-      navigate('/orders')
     }
   }
   
@@ -157,7 +172,11 @@ const CreatePurchase = () => {
       <div className='mt-10'>
         {preferenceId && <Wallet initialization={{ preferenceId }} />}
       </div>
-      <FooterWaiter/>
+      {role === 'Admin' ? (
+                    <FooterAdmin/>
+                ) : (
+                    <FooterWaiter/>
+                )}
     </div>
     );
   };

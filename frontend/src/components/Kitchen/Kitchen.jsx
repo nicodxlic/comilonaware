@@ -3,12 +3,23 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import Header from '../Header/Header'
 import FooterChef from '../Footer/FooterChef'
+import { useNavigate } from 'react-router-dom'
 
 import OrdersCard from '../Order/OrdersCard'
 
 const endpoint = 'http://localhost:8000/api'
 
 const Kitchen = () => {
+    const navigate = useNavigate()
+    const role = localStorage.getItem('role')
+    if(role !== 'Admin' && role !== 'Chef'){
+        Swal.fire({
+            icon: 'error',
+            title: '¡No tienes los permisos!',
+            text: 'debes tener el rol correspondiente a esta pantalla',
+          })
+        navigate('/')
+    }
     const [orders, setOrders] = useState([])
     const [products, setProducts] = useState([])
     const [orderMesage, setOrderMesage] = useState('Cargando pedidos...')

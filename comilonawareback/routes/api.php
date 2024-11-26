@@ -23,8 +23,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
  */
 Route::middleware(['role:Admin|Mozo'])->group(function () {
 
-    Route::get('/order', [OrderController::class, 'store']);
-    Route::get('/purchase', [PurchaseController::class, 'store']);
+    Route::post('/order', [OrderController::class, 'store']);
+    Route::post('/purchase', [PurchaseController::class, 'store']);
 
 });
 
@@ -45,13 +45,13 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index');
-    Route::post('/users/{id}/change-role', 'changeRole');
+    Route::post('/users/change-role/{id}', 'changeRole');
 });
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index');
     Route::patch('/product/disable/{id}', 'disable');
-    //Route::post('/product', 'store');
+    Route::post('/product', 'store');
     Route::get('/product/{id}', 'show');
     Route::put('/product/update/{id}', 'update');
     Route::put('/product/delete/{id}', 'destroy');

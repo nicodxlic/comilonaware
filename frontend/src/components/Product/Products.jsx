@@ -6,11 +6,21 @@ import Swal from "sweetalert2"
 import Header from '../Header/Header.jsx'
 import FooterAdmin from '../Footer/FooterAdmin.jsx'
 import FooterChef from '../Footer/FooterChef.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const endpoint = 'http://localhost:8000/api'
 
 const Products = () => {
+    const navigate = useNavigate()
     const role = localStorage.getItem('role')
+    if(role !== 'Admin' && role !== 'Chef'){
+        Swal.fire({
+            icon: 'error',
+            title: '¡No tienes los permisos!',
+            text: 'debes tener el rol correspondiente a esta pantalla',
+          })
+        navigate('/')
+    }
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
     const [shownProducts, setShownProducts] = useState([])
