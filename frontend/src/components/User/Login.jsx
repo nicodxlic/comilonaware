@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { axios } from '../../axiosConfig.js';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = ({ setAuthenticated }) => {
     const [email, setEmail] = useState('')
@@ -30,18 +31,24 @@ const Login = ({ setAuthenticated }) => {
             }
 
         } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error. Por favor, verifique si las credenciales son correctas.',
+            });
             console.error('Error en la solicitud:', error.response?.data || error.message);
+            return
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full">
-                <h2 className="text-2xl font-bold text-center mb-6 text-gray-700">Iniciar Sesión</h2>
+                <h2 className="text-3xl font-bold text-center mb-6 text-gray-700">Iniciar Sesión</h2>
                 <form onSubmit={handleLogin} className="space-y-4">
                     {/* Campo de correo electrónico */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-600">
+                        <label htmlFor="email" className="block text-xl font-medium text-gray-600">
                             Correo Electrónico
                         </label>
                         <input
@@ -57,7 +64,7 @@ const Login = ({ setAuthenticated }) => {
 
                     {/* Campo de contraseña */}
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-600">
+                        <label htmlFor="password" className="block text-xl font-medium text-gray-600 mt-8">
                             Contraseña
                         </label>
                         <input

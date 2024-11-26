@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -18,11 +20,37 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Crear un nuevo usuario
      */
     public function store(Request $request)
     {
-        //
+            $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string',
+            'role' => 'required|string',
+            ]);
+            try {
+                $user = User::create([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                ]);
+                $user->assignRole($request->input('role'));
+    
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Usuario creado exitosamente.',
+                    'user' => $user,
+                ], 201); // Código HTTP 201 para creación exitosa
+            } catch (\Exception $e) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error al crear el usuario.',
+                    'error' => $e->getMessage(),
+                ], 500);
+        }
+    
     }
 
     /**
@@ -42,11 +70,29 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Eliminar un usuario.
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            // Prevenir que un usuario elimine su propia cuenta
+            if (Auth::id() == $id) {
+                return response()->json([
+                    'message' => 'No puedes eliminar tu propia cuenta.',
+                ], 403);
+            }
+            $user = User::findOrFail($id);
+            $user->delete();
+    
+            return response()->json([
+                'message' => 'Usuario eliminado correctamente.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al intentar eliminar el usuario.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
 

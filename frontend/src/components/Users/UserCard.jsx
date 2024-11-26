@@ -8,12 +8,13 @@ const UserCard = ({name, email, id, role, getAllUsers}) => {
 
     const deleteUser = async () => {
         console.log('eliminar usuario', id)
-        // const response = axios.delete('ruta para eliminar')
+        const response = axios.delete(`${endpoint}/user/${id}`)
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
             text: 'Usuario eliminado correctamente',
         })
+        getAllUsers()
     }
 
     const handleRoleChange = async (e) => {
