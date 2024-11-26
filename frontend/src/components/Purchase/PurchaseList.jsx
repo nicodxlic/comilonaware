@@ -20,6 +20,9 @@ const PurchaseList = () => {
         navigate('/')
     }
     const [purchases, setPurchases] = useState([])
+    const [filterStatus, setFilterStatus] = useState('all');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
     const getAllPurchases = async () => {
         Swal.fire({
@@ -155,6 +158,18 @@ const PurchaseList = () => {
         getAllPurchases()
     }, [])
 
+    const totalPages = Math.max(1, Math.ceil(purchases.length / itemsPerPage)); // Al menos 1 página
+    const paginatedPurchases = purchases.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(1);
+        }
+    }, [totalPages, currentPage]);
+
     return(
         <div>
             <Header/>
@@ -170,7 +185,7 @@ const PurchaseList = () => {
                     </tr>
                 </thead>
                 <tbody className='text-center items-center'>
-                    {purchases.map ((purchase) => (
+                    {paginatedPurchases.map ((purchase) => (
                         <tr key={purchase.id}>
                         <td>{purchase.id}</td>
                         <td>${purchase.totalCost}</td>
@@ -205,6 +220,26 @@ const PurchaseList = () => {
                     ))}
                 </tbody>
             </table>
+            <div className="flex justify-between items-center ml-24">
+                {/* Paginado */}
+                <div className="text-gray-700">
+                    Página {currentPage} de {totalPages}
+                    <button
+                        className="ml-4 px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        Anterior
+                    </button>
+                    <button
+                        className="ml-2 px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        Siguiente
+                    </button>
+                </div>
+            </div>
             {role === 'Admin' ? (
                     <FooterAdmin/>
                 ) : (
