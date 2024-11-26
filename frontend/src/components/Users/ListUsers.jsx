@@ -4,6 +4,7 @@ import UserCard from './UserCard.jsx';
 import { useNavigate } from 'react-router-dom';
 import FooterAdmin from '../Footer/FooterAdmin.jsx';
 import Swal from "sweetalert2"
+import Header from '../Header/Header.jsx';
 
 const endpoint = 'http://localhost:8000/api'
 
@@ -39,7 +40,8 @@ const ListUsers = () => {
     }, []);
 
     return (
-        <div>
+        <div className='mb-8'>
+            <Header/>
             <h1>Lista de usuarios</h1>
             <button
               onClick={() => navigate('/create-user')}

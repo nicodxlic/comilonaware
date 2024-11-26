@@ -85,7 +85,7 @@ const Products = () => {
     }
 
     return (
-        <div> <Header/>
+        <div className='mb-8'> <Header/>
         <div className="container mx-auto p-4">
             <h3 className="text-2xl font-bold mb-4">Productos</h3>
             <div className='flex justify-center mt-6 mb-6'>

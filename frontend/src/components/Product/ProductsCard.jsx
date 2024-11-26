@@ -39,7 +39,7 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
               <input id="swal-input2" class="swal2-input" type="number" placeholder="Precio" value="${product?.price || ''}">
               <label for="swal-input3" style="margin-top: 10px;">URL de la imagen:</label>
               <input id="swal-input3" class="swal2-input" type="text" placeholder="URL de la imagen" value="${product?.image || ''}">
-              <label for="swal-input4" style="margin-top: 10px;">URL de la imagen:</label>
+              <label for="swal-input4" style="margin-top: 10px;">Descripción:</label>
               <input id="swal-input4" class="swal2-input" type="text" placeholder="descripcion" value="${product?.description || ''}">
               <label for="swal-select" style="margin-top: 10px;">Categoría:</label>
               <select id="swal-select" class="swal2-input">

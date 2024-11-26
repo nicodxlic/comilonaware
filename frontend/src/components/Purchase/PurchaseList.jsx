@@ -35,7 +35,7 @@ const PurchaseList = () => {
           })
         try {
             const response = await axios.get(`${endpoint}/purchases`)
-            setPurchases(response.data)
+            setPurchases(response.data.reverse())
             Swal.close()
         } catch (error) {
             Swal.close()
