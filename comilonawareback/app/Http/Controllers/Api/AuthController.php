@@ -34,4 +34,19 @@ class AuthController extends Controller
         }
         return response()->json(['error' => 'Credenciales incorrectas'], 401);
     }
+
+    /**
+     * Para el logout se usó de referencia el método destroy
+     * dentro de AuthenticatedSessionController
+     */
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout(); 
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Sesión cerrada exitosamente'], 200);
+    }
 }
