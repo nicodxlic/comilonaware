@@ -20,6 +20,45 @@ class UserController extends Controller
     }
 
     /**
+     * Perfil de un usuario
+     */
+    public function getProfile(Request $request)
+    {
+    return response()->json([
+        'user' => $request->user()
+    ]);
+    }
+
+    /**
+     * Editar o actualizar perfil
+     */
+
+    public function updateProfile(Request $request)
+    {
+    $request->validate([
+        'name' => 'nullable|string|max:255',
+        'email' => 'nullable|email|max:255' . $request->user()->id,
+        'password' => 'nullable',
+    ]);
+
+    $user = $request->user();
+
+    if ($request->has('name')) {
+        $user->name = $request->input('name');
+    }
+    if ($request->has('email')) {
+        $user->email = $request->input('email');
+    }
+    if ($request->has('password')) {
+        $user->password = bcrypt($request->input('password'));
+    }
+
+    $user->save();
+
+    return response()->json(['message' => 'Perfil actualizado correctamente.', 'user' => $user]);
+}
+
+    /**
      * Crear un nuevo usuario
      */
     public function store(Request $request)

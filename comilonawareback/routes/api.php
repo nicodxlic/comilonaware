@@ -48,6 +48,8 @@ Route::controller(UserController::class)->group(function () {
     Route::post('/users/change-role/{id}', 'changeRole');
     Route::delete('/user/{id}', 'destroy');
     Route::post('/user', 'store');
+    Route::get('/profile', 'getProfile');
+    Route::post('/profile-update', 'updateProfile');
 });
 
 Route::controller(ProductController::class)->group(function () {
