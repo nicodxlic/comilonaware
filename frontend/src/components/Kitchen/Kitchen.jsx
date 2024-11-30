@@ -72,6 +72,22 @@ const Kitchen = () => {
         });
     };
 
+    const handleStatusUpdate = (orderId, newStatus) => {
+        setOrders((prevOrders) => {
+            // Actualiza el estado de la orden localmente
+            const updatedOrders = prevOrders.map((order) =>
+                order.id === orderId ? { ...order, status: newStatus } : order
+            );
+    
+            // Reordena las órdenes después de actualizar
+            return updatedOrders.sort((a, b) => {
+                const orderPriority = { 'in process': 1, 'pending': 2, 'ready': 3 };
+                return orderPriority[a.status] - orderPriority[b.status];
+            });
+        });
+    };
+    
+
     useEffect ( () => {
         getAllOrders()
       }, [])
@@ -86,7 +102,8 @@ const Kitchen = () => {
                         <OrdersCard 
                         order = {order}
                         getAllOrders={getAllOrders}
-                        getOrderProducts={getOrderProducts}/>
+                        getOrderProducts={getOrderProducts}
+                        handleStatusUpdate={handleStatusUpdate}/>
                     ))
                 ) : (
                     <p className="text-center col-span-full">{orderMesage}</p>

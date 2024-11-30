@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 const endpoint = 'http://localhost:8000/api'
 
-const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
+const OrdersCard = ({order, getAllOrders, getOrderProducts, handleStatusUpdate}) => {
     const statusColors = {
         'pending': 'white',
         'in process': 'yellow',
@@ -24,17 +24,17 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
               Swal.showLoading(); // Activa el spinner
             }
         })
-        let status = e.target.value
+        let newStatus = e.target.value
         await axios.get('/sanctum/csrf-cookie');
-        const response = await axios.put(`${endpoint}/order/status/` + order.id, {status: status})
+        await axios.put(`${endpoint}/order/status/` + order.id, {status: newStatus})
         Swal.close()
         Swal.fire({
             icon: 'success',
             title: '¡Éxito!',
             text: 'Producto creado correctamente',
         })
-        setColorCard(statusColors[status])
-        getAllOrders()
+        setColorCard(statusColors[order.status])
+        handleStatusUpdate(order.id, newStatus)
     }
 
     const deleteOrder = async (orderId) => {
@@ -47,7 +47,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
             }
         })
         await axios.get('/sanctum/csrf-cookie');
-        const response = await axios.put(`${endpoint}/order/status/` + orderId, {status: 'deleted'})
+        await axios.put(`${endpoint}/order/status/` + orderId, {status: 'deleted'})
         Swal.close()
         Swal.fire({
             icon: 'success',
@@ -56,6 +56,10 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts}) => {
         })
         getAllOrders()
     }
+
+    useEffect(() => {
+        setColorCard(statusColors[order.status] || 'white');
+    }, [order.status]);
 
     if(order.status === 'deleted'){
         return null
