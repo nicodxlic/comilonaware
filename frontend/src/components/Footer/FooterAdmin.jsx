@@ -21,9 +21,9 @@ const FooterAdmin = () => {
                 </button>
                 <button 
                 className="bg-purple-500 text-white px-24 py-6 rounded-lg hover:bg-purple-600"
-                onClick={() => navigate('/create-purchase')}
+                onClick={() => navigate('/kitchen')}
                 >
-                    Realizar pago
+                    Cocina
                 </button>
                 <button 
                 className="bg-yellow-500 text-white px-24 py-6 rounded-lg hover:bg-yellow-600"

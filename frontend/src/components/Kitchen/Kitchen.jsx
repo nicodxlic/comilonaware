@@ -3,6 +3,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import Header from '../Header/Header'
 import FooterChef from '../Footer/FooterChef'
+import FooterAdmin from '../Footer/FooterAdmin'
 import { useNavigate } from 'react-router-dom'
 
 import OrdersCard from '../Order/OrdersCard'
@@ -109,7 +110,11 @@ const Kitchen = () => {
                     <p className="text-center col-span-full">{orderMesage}</p>
                 )}
             </div>
-            <FooterChef/>
+            {role === 'Admin' ? (
+                    <FooterAdmin/>
+                ) : (
+                    <FooterChef/>
+                )}
         </div>
     )
 }
