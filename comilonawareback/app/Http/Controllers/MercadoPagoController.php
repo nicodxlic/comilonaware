@@ -9,7 +9,7 @@ class MercadoPagoController extends Controller
 {
     public function __construct()
     {
-        MercadoPagoConfig::setAccessToken('TEST-7635738400707710-110120-59f9466ac6ca98c6c93f6524dce4e123-190848384');
+        MercadoPagoConfig::setAccessToken('APP_USR-7342225731525566-113014-1362fac7caafb0aa734a0b8d72a43498-2070562691');
     }
     public function createPreference(Request $request)
     {
@@ -24,9 +24,9 @@ class MercadoPagoController extends Controller
                 ]
             ],
             "back_urls" => [
-                "success" => 'localhost:3000',
-                "failure" => 'localhost:3000',
-                "pending" => 'localhost:3000',
+                "success" => 'localhost:3000/purchases',
+                "failure" => 'localhost:3000/purchases',
+                "pending" => 'localhost:3000/purchases',
             ],
             "auto_return" => "approved",
             "external_reference" => "ORD-1234" // Reference ID
