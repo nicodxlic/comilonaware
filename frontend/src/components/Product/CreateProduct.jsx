@@ -94,81 +94,83 @@ const CreateProduct = () => {
         }
     }
     return (
-    <div> <Header/>
-    <div className="p-6">
-        <div className="w-full flex justify-start mb-6">
-            <button
-                className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
-                onClick={() => navigate('/products')}
-            >
+        <div>
+            <Header />
+            <div className="p-4">
+                <div className="ml-4 mt-4 w-full flex justify-start mb-10">
+                <button
+                className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400 transition duration-300"
+                onClick={() => navigate('/products')}>
                 Atrás
-            </button>
-        </div>
-        <h3>Agregar nuevo producto</h3>
-        <form onSubmit={store}>
-            <div className='mb-3'>
-                <label className='form-label'>Nombre</label>
-                <input
+                </button>
+            </div>
+            <div className="relative max-w-4xl mx-auto mt-10 p-8 bg-white rounded-xl border-4 border-double shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Agregar nuevo producto</h1>
+                <form onSubmit={store} className="space-y-6">
+                <div>
+                    <label className="form-label block text-gray-700 text-xl font-bold mb-2">Nombre:</label>
+                    <input
+                    id="name"
+                    type="text"
                     value={name}
-                    onChange={ (e)=> setName(e.target.value)}
-                    type='text'
-                    className='form-control'
-                />
-            </div>
-            <div className='mb-3'>
-                <label className='form-label'>Precio</label>
-                <input
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+                </div>
+                <div>
+                    <label className="form-label block text-gray-700 text-xl font-bold mb-2">Precio:</label>
+                    <input
+                    id="price"
+                    type="number"
                     value={price}
-                    onChange={ (e)=> setPrice(e.target.value)}
-                    type='number'
-                    className='form-control'
-                />
-            </div>
-            <div className='mb-3'>
-                <label className='form-label'>URL de la imagen</label>
+                    onChange={(e) => setPrice(e.target.value)}
+                    className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+                </div>
+    
+                <div>
+                <label className="form-label block text-gray-700 text-xl font-bold mb-2">URL de la imagen:</label>
                 <input
+                    id="image"
+                    type="text"
                     value={image}
-                    onChange={ (e)=> setImage(e.target.value)}
-                    type='text'
-                    className='form-control'
-                />
-            </div>
-            <div className='mb-3'>
-                <label className='form-label'>Descripcion</label>
+                    onChange={(e) => setImage(e.target.value)}
+                    className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+                </div>
+    
+                <div>
+                <label className="form-label block text-gray-700 text-xl font-bold mb-2">Descripción:</label>
                 <textarea
+                    id="description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className='form-control'
-                    rows="4"
-                />
-            </div>
-            <div className='mb-3'>
-                <label className='form-label'>Selecciona una categoria</label>
-                <br/>
-                <select
-                onChange={(e) => handleCategoryChange(e)}
-                >
-                    <option default value=''>Seleccione una categoria</option>
+                    className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                    rows={4}/>
+                </div>
+    
+                <div>
+                    <label className="form-label block text-gray-700 text-xl font-bold mb-2">Selecciona una categoría:</label>
+                    <select
+                    id="category"
+                    onChange={(e) => handleCategoryChange(e)}
+                    className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200">
+                    <option value=''>Seleccione una categoría</option>
                     {categories.map(category => (
-                        <option key={category.id} value={category.id}>
+                    <option key={category.id} value={category.id}>
                         {category.name}
-                        </option>
+                    </option>
                     ))}
                 </select>
+                </div>
+    
+                <button
+                type="submit"
+                className='btn btn-primary py-3 px-4 w-full'
+                disabled={name === '' || price === '' || image === '' || description === '' || productCategory.length === 0}>
+                Guardar
+                </button>
+            </form>
             </div>
-            <br/>
-            <button 
-            type='submit' 
-            className='btn btn-primary'
-            disabled={name === '' || 
-            price === '' || 
-            image === '' ||
-            description === '' || 
-            productCategory.length === 0}
-            >Guardar</button>
-        </form>
-    </div>
-    </div>
+            </div>
+        </div>
     )
 }
 
