@@ -173,7 +173,7 @@ const ListOrders = () => {
                             </td>
                             <td>
                                 <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
                                     onClick={() => getOrderProducts(order.id)}
                                 >
                                     Ver productos
@@ -182,7 +182,7 @@ const ListOrders = () => {
                             {role === 'Admin' && (
                                 <td>
                                     <button
-                                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                                         onClick={() => deleteOrder(order.id)}
                                     >
                                         Eliminar pedido

@@ -153,19 +153,19 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
           <p className="text-white mb-2">Precio: ${product.price}</p>
           <button
           onClick={() => editProduct(product)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-700"
         >
           Editar
         </button>
           <button
             onClick={() => deleteProduct(product.id)}
-            className="bg-gray-700 text-white px-4 py-2 rounded-lg mr-2"
+            className="bg-gray-700 text-white px-4 py-2 rounded-lg mr-2 hover:bg-gray-800"
           >
             Eliminar
           </button>
           <button
             onClick={() => disableProduct(product.id)}
-            className="bg-green-500 text-white px-3 py-2 rounded-lg"
+            className="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-gren-600"
           >
             Habilitar
           </button>
@@ -184,19 +184,19 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
         <p className="text-gray-700 mb-2">Precio: ${product.price}</p>
         <button
           onClick={() => editProduct(product)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-700"
         >
           Editar
         </button>
         <button
           onClick={() => deleteProduct(product.id)}
-          className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2"
+          className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700"
         >
           Eliminar
         </button>
         <button
           onClick={() => disableProduct(product.id)}
-          className="bg-yellow-500 text-white px-3 py-2 rounded-lg"
+          className="bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600"
         >
           Deshabilitar
         </button>
@@ -216,19 +216,19 @@ const ProductsCard = ({product, getAllProducts, categories}) => {
           <p className="text-white mb-2">Precio: ${product.price}</p>
           <button
           onClick={() => editProduct(product)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2"
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-blue-700"
         >
           Editar
         </button>
           <button
             onClick={() => deleteProduct(product.id)}
-            className="bg-gray-700 text-white px-4 py-2 rounded-lg mr-2"
+            className="bg-gray-700 text-white px-4 py-2 rounded-lg mr-2 hover:bg-gray-800"
           >
             Crear
           </button>
           <button
             onClick={() => disableProduct(product.id)}
-            className="bg-green-500 text-white px-3 py-2 rounded-lg"
+            className="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600"
           >
             Habilitar
           </button>

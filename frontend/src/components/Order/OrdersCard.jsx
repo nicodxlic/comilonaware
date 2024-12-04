@@ -65,7 +65,7 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts, handleStatusUpdate})
         return null
     } else{
         return (
-            <div key={order.id} className={"shadow-lg rounded-lg p-4"} style={{ backgroundColor: colorCard }}>
+            <div key={order.id} className={`shadow-lg rounded-lg p-4 bg-${colorCard}-500`} >
                 <h4 className="font-bold text-lg mb-2">Pedido N° {order.id}</h4>
                 <p className="text-gray-700 mb-2">mesa: {order.table}</p>
                 <p className="text-gray-700 mb-4">Estado: {order.status}</p>
@@ -98,13 +98,13 @@ const OrdersCard = ({order, getAllOrders, getOrderProducts, handleStatusUpdate})
                 <br/>
                 <button
                 onClick={() => deleteOrder(order.id)}
-                className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2"
+                className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700"
                 >
                     Eliminar
                 </button>
                 <button 
                 type='button' 
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg" 
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700" 
                 onClick={() => getOrderProducts(order.id)}
                 >
                     Ver productos

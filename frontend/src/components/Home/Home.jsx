@@ -23,6 +23,11 @@ const Home = () => {
         navigate('/login');
     };
 
+    const handleMenu = () => {
+        navigate('/menu');
+    };
+
+
     const handleLogout = async () => {
         Swal.fire({
             title: 'Cargando...',
@@ -66,25 +71,25 @@ const Home = () => {
 
     return (
         <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-center p-4 font-sans">
-        <main className="text-center">
+        <main className="text-center mt-4">
           <h1 className="font-serif text-5xl md:text-7xl font-bold text-gray-800 mb-4">
             ComilonaWare
           </h1>
           <p className="text-xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-16 mt-10">
             Sistema para la gestión interna de su restaurante.
           </p>
-          <div className="flex justify-center space-x-16 mb-10">
+          <div className="flex justify-center space-x-16 mb-18">
           {role ? (
-                    <button className='bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleEnter}>Entrar al sitio</button>
+                    <button className='bg-green-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleEnter}>Entrar al sitio</button>
                 ) : (
                     <button className='bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleLogin}>Iniciar Sesión</button>
                 )}
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-8 rounded-lg transition duration-300">
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-8 rounded-lg transition duration-300" onClick={handleMenu}>
               Menú
             </button>
             {role ? (<button className='bg-red-500 text-white px-8 py-6 rounded-lg hover:bg-red-700 mt-4 font-bold transition duration-300' onClick={handleLogout}>Cerrar sesión</button>) : ('')}
           </div>
-          <div className="flex justify-center space-x-16">
+          <div className="flex justify-center space-x-16 mt-20">
             <FeatureIcon icon="🍽️" text="Gestión de Mesas" />
             <FeatureIcon icon="💰" text="Registro de Pagos" />
             <FeatureIcon icon="👥" text="Administración de usuarios" />

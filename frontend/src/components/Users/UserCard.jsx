@@ -66,7 +66,7 @@ const UserCard = ({name, email, id, role, getAllUsers}) => {
           <br/>
           <button
             onClick={() => deleteUser()}
-            className="mt-2 bg-red-700 text-white px-4 py-2 rounded-lg mr-2"
+            className="mt-2 bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700"
           >
             Eliminar
           </button>

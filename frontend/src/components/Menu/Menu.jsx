@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {axios} from '../../axiosConfig.js'
 import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom'
 
 const endpoint = 'http://localhost:8000/api'
 
 const Menu = () => {
+    const navigate = useNavigate()
     const [products, setProducts] = useState([])
     const [categories, setCategories] = useState([])
     const [selectedCategory, setSelectedCategory] = useState('all')
@@ -49,6 +51,14 @@ const Menu = () => {
 
     return (
         <div>
+        <div className="absolute top-6 left-6">
+                <button
+                    className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
+                    onClick={() => navigate('/')}
+                >
+                    Atrás
+                </button>
+            </div>
         <div className="container mx-auto px-4 py-8 rounded-lg">
             <div className="mb-6">
                 <label htmlFor="categoryFilter" className="font-semibold mr-2">Filtrar por categoría:</label>
