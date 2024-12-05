@@ -139,8 +139,8 @@ const PurchaseList = () => {
                 title: 'Pagos asociados',
                 html: payments.map(payment => `
                     <div>
-                        <p><strong>Método:</strong> ${payment.paymentMethod}</p>
-                        <p><strong>Monto:</strong> $${payment.amount}</p>
+                        <h5><strong>Método:</strong> ${payment.paymentMethod}</h5>
+                        <h5><strong>Monto:</strong> $${payment.amount}</h5>
                     </div>
                     <hr>
                 `).join(''),
@@ -203,7 +203,14 @@ const PurchaseList = () => {
                         </button>
                         </td>
                         <td>
-                            <button type="button" onClick={() => handleAddPayment(purchase.id)} className='btn btn-success mr-12'>
+                            <button 
+                            type="button" 
+                            onClick={() => handleAddPayment(purchase.id)} 
+                            className={`px-4 py-2 mr-10 rounded ${
+                                purchase.status === 'pagado' || purchase.status === 'cancelado'
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-green-500 hover:bg-green-600 text-white'}`}
+                            disabled={purchase.status === 'pagado' || purchase.status === 'cancelado'}>
                                 Añadir pago
                             </button>
                             <button
