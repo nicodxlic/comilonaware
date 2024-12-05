@@ -63,28 +63,28 @@ const Home = () => {
         return (
           <div className="flex flex-col items-center">
             <div className="text-4xl mb-2">{icon}</div>
-            <span className="text-2xl font-semibold text-gray-600">{text}</span>
+            <span className="text-2xl font-semibold text-white">{text}</span>
           </div>
         )
       }
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-white to-gray-400 flex flex-col items-center justify-center p-4 font-sans">
+        <div className="min-h-screen bg-cyan-600 flex flex-col items-center justify-center p-4 font-sans">
         <main className="text-center mt-4">
-          <h1 className="font-serif text-5xl md:text-7xl font-bold text-gray-800 mb-4">
+          <h1 className="font-serif text-5xl md:text-7xl font-bold text-white mb-4">
             ComilonaWare
           </h1>
-          <p className="text-xl md:text-3xl text-gray-600 max-w-2xl mx-auto mb-16 mt-10">
+          <p className="text-xl md:text-3xl text-white max-w-2xl mx-auto mb-16 mt-10">
             Sistema para la gestión interna de su restaurante.
           </p>
           <div className="flex justify-center space-x-16 mb-18">
           {role ? (
-                    <button className='bg-green-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleEnter}>Entrar al sitio</button>
+                    <button className='bg-green-600 text-white px-8 py-6 rounded-lg hover:bg-green-700 mt-4 font-bold transition duration-300' onClick={handleEnter}>Entrar al sitio</button>
                 ) : (
-                    <button className='bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleLogin}>Iniciar Sesión</button>
+                    <button className='bg-blue-900 text-white px-8 py-6 rounded-lg hover:bg-blue-950 mt-4 font-bold transition duration-300' onClick={handleLogin}>Iniciar Sesión</button>
                 )}
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-8 mt-4 rounded-lg transition duration-300" onClick={handleMenu}>
+            <button className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 mt-4 rounded-lg transition duration-300" onClick={handleMenu}>
               Menú
             </button>
             {role ? (<button className='bg-red-500 text-white px-8 py-6 rounded-lg hover:bg-red-700 mt-4 font-bold transition duration-300' onClick={handleLogout}>Cerrar sesión</button>) : ('')}
@@ -95,7 +95,7 @@ const Home = () => {
             <FeatureIcon icon="👥" text="Administración de usuarios" />
           </div>
         </main>
-        <footer className="mt-96 text-gray-500">
+        <footer className="mt-96 text-white">
           © 2024 ComilonaWare.
         </footer>
       </div>
