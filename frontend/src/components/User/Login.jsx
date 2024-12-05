@@ -50,7 +50,7 @@ const Login = ({ setAuthenticated }) => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-500 to-black">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-white to-gray-400">
         <div className="bg-white shadow-2xl rounded-xl p-10 max-w-md w-full">
           <h2 className="text-3xl font-extrabold text-center mb-14 text-gray-800">Iniciar Sesión</h2>
           <form onSubmit={handleLogin} className="space-y-6">

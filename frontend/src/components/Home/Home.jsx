@@ -70,7 +70,7 @@ const Home = () => {
 
 
     return (
-        <div className="min-h-screen bg-gray-200 flex flex-col items-center justify-center p-4 font-sans">
+        <div className="min-h-screen bg-gradient-to-r from-white to-gray-400 flex flex-col items-center justify-center p-4 font-sans">
         <main className="text-center mt-4">
           <h1 className="font-serif text-5xl md:text-7xl font-bold text-gray-800 mb-4">
             ComilonaWare
@@ -84,7 +84,7 @@ const Home = () => {
                 ) : (
                     <button className='bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-blue-700 mt-4 font-bold transition duration-300' onClick={handleLogin}>Iniciar Sesión</button>
                 )}
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-8 rounded-lg transition duration-300" onClick={handleMenu}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold px-8 mt-4 rounded-lg transition duration-300" onClick={handleMenu}>
               Menú
             </button>
             {role ? (<button className='bg-red-500 text-white px-8 py-6 rounded-lg hover:bg-red-700 mt-4 font-bold transition duration-300' onClick={handleLogout}>Cerrar sesión</button>) : ('')}
