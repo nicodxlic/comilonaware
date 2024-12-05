@@ -7,14 +7,27 @@ const UserCard = ({name, email, id, role, getAllUsers}) => {
   const idUsuario = localStorage.getItem('id')
 
     const deleteUser = async () => {
-        console.log('eliminar usuario', id)
-        const response = axios.delete(`${endpoint}/user/${id}`)
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: 'Usuario eliminado correctamente',
-        })
-        getAllUsers()
+        if(idUsuario == id){
+          Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: 'No puedes eliminar tu propio usuario',
+          })
+        } else{
+          try{
+            axios.delete(`${endpoint}/user/${id}`)
+            Swal.fire({
+              icon: 'success',
+              title: '¡Éxito!',
+              text: 'Usuario eliminado correctamente',
+            })
+            getAllUsers()
+          } catch(error){
+            Swal.close()
+            Swal.fire('Error', 
+            'Ocurrió un error al eliminar el usuario.', 'error')
+          }
+        }
     }
 
     const handleRoleChange = async (e) => {
@@ -46,7 +59,7 @@ const UserCard = ({name, email, id, role, getAllUsers}) => {
       } catch(error){
         Swal.close()
         Swal.fire('Error', 
-        'Ocurrió un error al guardar el pedido.', 'error')
+        'Ocurrió un error al cambiar el rol.', 'error')
       }
     }}
 

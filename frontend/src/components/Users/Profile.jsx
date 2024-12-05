@@ -11,19 +11,27 @@ const Profile = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const { data } = await axios.get("/api/profile");
-        console.log(data)
-        setUser(data.user);
-        setName(data.user.name);
-        setEmail(data.user.email);
-      } catch (error) {
-        Swal.fire("Error", "No se pudo cargar el perfil.", "error");
+  const fetchProfile = async () => {
+    Swal.fire({
+      title: 'Cargando...',
+      text: 'Por favor espera',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
       }
-    };
+    })
+    try {
+      const { data } = await axios.get("/api/profile");
+      setUser(data.user);
+      setName(data.user.name);
+      setEmail(data.user.email);
+    } catch (error) {
+      Swal.fire("Error", "No se pudo cargar el perfil.", "error");
+    }
+    Swal.close()
+  };
 
+  useEffect(() => {
     fetchProfile();
   }, []);
 
@@ -57,7 +65,6 @@ const Profile = () => {
           password,
           password_confirmation: confirmPassword,
         });
-        console.log(response)
         setUser(response.data.user);
         Swal.fire("Éxito", "Perfil actualizado correctamente.", "success");
       } catch (error) {

@@ -56,8 +56,6 @@ const CreateUser = () => {
                     role: selectedRole,
                 });
     
-                console.log('Respuesta del servidor:', response);
-    
                 if (response.status === 201 && response.data.success) {
                     Swal.close();
                     Swal.fire({

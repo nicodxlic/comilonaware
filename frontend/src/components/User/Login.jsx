@@ -24,7 +24,6 @@ const Login = ({ setAuthenticated }) => {
                 email: email,
                 password: password
             });
-            console.log('Respuesta recibida:', response.data);
             const role = response.data.role
             localStorage.setItem('user', JSON.stringify({email: email, password: password}))
             localStorage.setItem('id', response.data.user.id)
