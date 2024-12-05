@@ -29,8 +29,20 @@ const Profile = () => {
 
   const handleUpdate = async () => {
     if(name === '' || email === '' || password === '' || confirmPassword === ''){
-      Swal.fire("Falta completar campos", "Debes completar todos los campos para continuar.", "error");
-    } else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Debes completar todos los campos para continuar.'
+      })
+      return
+    } else if (password != confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Las contraseñas no coinciden.'
+      })
+      return
+    }
       try {
         Swal.fire({
           title: "Cargando...",
@@ -51,62 +63,76 @@ const Profile = () => {
       } catch (error) {
         Swal.fire("Error", "No se pudo actualizar el perfil.", "error");
       }
-    }
   };
 
   return (
-    <div className="p-6">
+    <div className="p-4">
       <div className="ml-4 mt-4 w-full flex justify-start mb-6">
           <button
               className="bg-blue-500 text-white px-8 py-6 rounded-lg hover:bg-gray-400"
-              onClick={() => navigate('/products')}
-          >
+              onClick={() => navigate('/')}>
               Atrás
           </button>
       </div>
-      <h1 className="text-2xl font-bold mb-4">Perfil</h1>
-      <div className="mb-4">
-        <label className="block mb-2">Nombre:</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="border px-4 py-2 w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Correo electrónico:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border px-4 py-2 w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Nueva contraseña:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border px-4 py-2 w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2">Confirmar nueva contraseña:</label>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="border px-4 py-2 w-full"
-        />
-      </div>
-      <button
-        onClick={handleUpdate}
-        className="bg-blue-500 text-white px-6 py-2 rounded-lg"
-      >
-        Actualizar perfil
-      </button>
+      <div className="relative max-w-4xl mx-auto mt-10 p-8 bg-white rounded-xl border-4 border-double shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Perfil de Usuario</h1>
+      
+      <form onSubmit={(e) => { e.preventDefault(); handleUpdate(); }} className="space-y-6">
+        <div>
+          <label htmlFor="name" className="block text-gray-700 text-xl font-bold mb-2">
+            Nombre:
+          </label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-gray-700 text-xl font-bold mb-2">
+            Correo electrónico:
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block text-gray-700 text-xl font-bold mb-2">
+            Nueva contraseña:
+          </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+        </div>
+
+        <div>
+          <label htmlFor="confirmPassword" className="block text-gray-700 text-xl font-bold mb-2">
+            Confirmar nueva contraseña:
+          </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="w-full bg-gray-300 border border-gray-400 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"/>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          Actualizar perfil
+        </button>
+      </form>
+    </div>
     </div>
   );
 };

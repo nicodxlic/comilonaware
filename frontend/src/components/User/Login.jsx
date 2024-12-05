@@ -50,11 +50,62 @@ const Login = ({ setAuthenticated }) => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-500 to-black">
+        <div className="bg-white shadow-2xl rounded-xl p-10 max-w-md w-full">
+          <h2 className="text-3xl font-extrabold text-center mb-14 text-gray-800">Iniciar Sesión</h2>
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label htmlFor="email" className="block text-xl font-semibold text-gray-700 mb-2">
+                Correo Electrónico
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-transparent transition duration-200"
+                placeholder="ejemplo@correo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+  
+            <div>
+              <label htmlFor="password" className="block text-xl font-semibold text-gray-700 mb-2">
+                Contraseña
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-500 focus:border-transparent transition duration-200 mb-4"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+  
+            <div>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-100 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              >
+                Ingresar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+};
+
+export default Login;
+
+/**
+ *         <div className="min-h-screen flex items-center justify-center bg-gray-100">
             <div className="bg-white shadow-md rounded-lg p-8 max-w-sm w-full">
                 <h2 className="text-3xl font-bold text-center mb-6 text-gray-700">Iniciar Sesión</h2>
                 <form onSubmit={handleLogin} className="space-y-4">
-                    {/* Campo de correo electrónico */}
+                    
                     <div>
                         <label htmlFor="email" className="block text-xl font-medium text-gray-600">
                             Correo Electrónico
@@ -66,11 +117,10 @@ const Login = ({ setAuthenticated }) => {
                             placeholder="ejemplo@correo.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+                            required/>
                     </div>
 
-                    {/* Campo de contraseña */}
+            
                     <div>
                         <label htmlFor="password" className="block text-xl font-medium text-gray-600 mt-8">
                             Contraseña
@@ -82,23 +132,17 @@ const Login = ({ setAuthenticated }) => {
                             placeholder="********"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                            required/>
                     </div>
 
-                    {/* Botón de enviar */}
                     <div>
                         <button
                             type="submit"
-                            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-                        >
+                            className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200">
                             Ingresar
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-    );
-};
-
-export default Login;
+ */
