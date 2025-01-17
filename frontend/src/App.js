@@ -15,6 +15,7 @@ import PurchaseList from './components/Purchase/PurchaseList.jsx';
 import ListUsers from './components/Users/ListUsers.jsx'
 import CreateUser from './components/Users/CreateUser.jsx';
 import Profile from './components/Users/Profile.jsx';
+import Categories from './components/Product/Categories.jsx'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path='/purchase' element={ <ListOrders/> }/>
         <Route path='/kitchen' element={ <Kitchen/> }/>
         <Route path='/products' element={ <Products/> }/>
+        <Route path='/categories' element={ <Categories/> }/>
         <Route path='/purchases' element={ <PurchaseList/> }/>
         <Route path='/create-product' element={ <CreateProduct/>} />
         <Route path='/create-order' element={ <CreateOrder/>} />

@@ -64,10 +64,10 @@ Route::controller(ProductController::class)->group(function () {
 
 Route::controller(CategoryController::class)->group(function () {
     Route::get('/categories', 'index');
-    Route::post('/category', 'store');
-    Route::get('/category/{id}', 'show');
-    Route::put('/category/update/{id}', 'update');
-    Route::put('/category/delete/{id}', 'destroy');
+    Route::post('/categories', 'store');
+    Route::get('/categories/{id}', 'show');
+    Route::put('/categories/update/{id}', 'update');
+    Route::put('/categories/delete/{id}', 'destroy');
 });
 
 Route::controller(Order_ProductController::class)->group(function () {

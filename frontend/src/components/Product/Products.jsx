@@ -89,8 +89,11 @@ const Products = () => {
         <div className="container mx-auto p-4">
             <h3 className="text-2xl font-bold mb-4">Productos</h3>
             <div className='flex justify-center mt-6 mb-6'>
-                <Link to="/create-product" className='bg-green-500 text-white px-4 py-2 rounded-lg'>
+                <Link to="/create-product" className='bg-green-500 text-white px-4 py-2 rounded-lg mr-4'>
                     Agregar nuevo producto
+                </Link>
+                <Link to="/categories" className='bg-blue-500 text-white px-4 py-2 rounded-lg'>
+                    Menu de categorias
                 </Link>
             </div>
             <div className="mb-6 flex justify-start items-center space-x-4">
