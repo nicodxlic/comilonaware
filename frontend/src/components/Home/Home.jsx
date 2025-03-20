@@ -59,10 +59,9 @@ const Home = () => {
           }
     };
 
-    function FeatureIcon({ icon, text }) {
+    function FeatureIcon({ text }) {
         return (
           <div className="flex flex-col items-center">
-            <div className="text-4xl mb-2">{icon}</div>
             <span className="text-2xl font-semibold text-white">{text}</span>
           </div>
         )
@@ -89,11 +88,22 @@ const Home = () => {
             </button>
             {role ? (<button className='bg-red-500 text-white px-8 py-6 rounded-lg hover:bg-red-700 mt-4 font-bold transition duration-300' onClick={handleLogout}>Cerrar sesión</button>) : ('')}
           </div>
+          
           <div className="flex justify-center space-x-16 mt-20">
-            <FeatureIcon icon="🍽️" text="Gestión de Mesas" />
-            <FeatureIcon icon="💰" text="Registro de Pagos" />
-            <FeatureIcon icon="👥" text="Administración de usuarios" />
+            <div className="flex flex-col items-center">
+              <img src="table.png" alt="tableIcon" className="w-40 h-40 mb-4" />
+              <FeatureIcon text="Gestión de Mesas" />
+            </div>
+            <div className="flex flex-col items-center">
+              <img src="currency.png" alt="currencyIcon" className="w-40 h-40 mb-4" />
+              <FeatureIcon text="Registro de Pagos" />
+            </div>
+            <div className="flex flex-col items-center">
+              <img src="user.png" alt="userIcon" className="w-40 h-40 mb-4" />
+              <FeatureIcon text="Administración de usuarios" />
+            </div>
           </div>
+
         </main>
         <footer className="mt-96 text-white">
           © 2024 ComilonaWare.
